@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mind Tapestry - Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+     <!-- Include jsPDF and html2canvas (BEFORE your script file) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <div id="result-container" class="container">
+        <h1><img id="logo-img" src="{{ url_for('static', filename='images/logo.png') }}" alt="Mind Tapestry Logo"> Mind Tapestry</h1>
+
+        <section>
+            <h2><img src="{{ url_for('static', filename='images/result.jpg') }}" alt="Result" style="margin-bottom:0"> Mental Health Results</h2>
+        </section>
+
+        <!-- Risk Level Bar -->
+        <section>
+            <h2>Your Risk Level</h2>
+            <div id="risk-bar-container">
+                <div id="risk-bar"></div>
+                <div class="risk-labels">
+                    <div class="label normal"><span>Normal</span><br><small>Keep Thriving</small></div>
+                    <div class="label mild"><span>Mild</span><br><small>Pay Attention</small></div>
+                    <div class="label moderate"><span>Moderate</span><br><small>Time for a Change</small></div>
+                    <div class="label severe"><span>Severe</span><br><small>Seek Support Now</small></div>
+                    <div class="label extreme"><span>Extreme</span><br><small>Get Urgent Help Now</small></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gauge Meters -->
+        <section>
+            <h2>Your Scores</h2>
+            <div class="gauge-container">
+                <div class="gauge">
+                    <canvas id="depression-gauge" width="150" height="100"></canvas>
+                    <p>Depression</p>
+                </div>
+                <div class="gauge">
+                    <canvas id="anxiety-gauge" width="150" height="100"></canvas>
+                    <p>Anxiety</p>
+                </div>
+                <div class="gauge">
+                    <canvas id="stress-gauge" width="150" height="100"></canvas>
+                    <p>Stress</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Do's, Don'ts, and Suggestions Section -->
+        <section>
+            <h2>Recommendations</h2>
+            <div class="recommendations-container">
+                <div class="dos">
+                    <h3>✅ Do's</h3>
+                    <ul id="dos-list"></ul>
+                </div>
+                <div class="donts">
+                    <h3>❌ Don'ts</h3>
+                    <ul id="donts-list"></ul>
+                </div>
+                <div class="suggestions">
+                    <h3>💡 Suggestions</h3>
+                    <ul id="suggestions-list"></ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="button-group">
+            <button id="generate-pdf" onclick="generatePDF()">Generate Report</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='result.js') }}"></script>
+</body>
+</html>
