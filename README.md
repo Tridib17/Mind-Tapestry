@@ -50,28 +50,5 @@ Mind Tapestry is a Flask-based web application designed to assess mental health 
    ```
    The app will be available at `http://127.0.0.1:5000`.
 
-## 🌍 Deployment (Render)
-1. Push your code to **GitHub**:
-   ```bash
-   git init
-   git remote add origin https://github.com/yourusername/mental-health-app.git
-   git add .
-   git commit -m "Initial commit"
-   git push -u origin main
-   ```
-
-2. Deploy to **Render**:
-   - Sign up at [https://render.com/](https://render.com/).
-   - Click "New Web Service" → "Connect Repository" → Select your GitHub repo.
-   - Set the **Build Command**:
-     ```bash
-     pip install -r requirements.txt
-     ```
-   - Set the **Start Command**:
-     ```bash
-     gunicorn app:app
-     ```
-   - Click **Deploy** and wait for the live URL.
-
 ## 🔗 Live Demo
 https://mind-tapestry.onrender.com
