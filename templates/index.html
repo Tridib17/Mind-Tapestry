@@ -19,9 +19,8 @@
             </div>
         </div>
 
-
-        <!-- Message Box -->
-        <div id="message-box" class="message-box"></div>
+        <!-- Message Box
+        <div id="message-box" class="message-box"></div> -->
                 
         <!-- Personal Details Section -->
         <section id="personal-details" class="question-section active">
@@ -92,29 +91,12 @@
                     <option value="Low">Low: Rarely or never participate</option>
                 </select>
             </div>
-            <div class="slider">
-                <label for="financial-stress">On a scale of 0 to 5, how much financial stress do you experience in your daily life?</label>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <input 
-                        type="range" 
-                        id="financial-stress" 
-                        min="0" 
-                        max="5" 
-                        step="1" 
-                        value="2" 
-                        oninput="updateFinancialStressLabel(this.value)" 
-                        required
-                    >
-                </div>
-                <div class="range-labels">
-                    <span>0 (No financial stress)</span>
-                    <span>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>5 (Severe financial stress)</span>
-                </div>
+            <div class="slider-container">
+                <label for="financial-stress">How would you rate your financial stress?</label>
+                <input type="range" id="financial-stress" min="1" max="5" step="1" value="2">
+                <div id="selected-value" class="slider-value">Selected: 2 (Mild Stress)</div>
             </div>
+            
             
             <div class="button-group">
                 <button onclick="nextSection('depression')">Next</button>
@@ -123,7 +105,7 @@
 
         <!-- Depression Section -->
         <section id="depression" class="question-section">
-            <h2><img src="{{ url_for('static', filename='images/depression.jpeg') }}" alt="Depression"> Depression Questions</h2>
+            <h2><img src="{{ url_for('static', filename='images/depression.jpeg') }}" alt="Depression"> Depression Assessment</h2>
 
             <div>
                 <label>1. I couldn't seem to experience any positive feeling at all</label>
@@ -139,6 +121,7 @@
                 <div class="options">
                     <input type="radio" id="depression_1_4" name="depression_1" value="Applied to me very much or most of the time"><label for="depression_1_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -155,6 +138,7 @@
                 <div class="options">
                     <input type="radio" id="depression_2_4" name="depression_2" value="Applied to me very much or most of the time"><label for="depression_2_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -171,6 +155,7 @@
                 <div class="options">
                     <input type="radio" id="depression_3_4" name="depression_3" value="Applied to me very much or most of the time"><label for="depression_3_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -187,6 +172,7 @@
                 <div class="options">
                     <input type="radio" id="depression_4_4" name="depression_4" value="Applied to me very much or most of the time"><label for="depression_4_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -203,6 +189,7 @@
                 <div class="options">
                     <input type="radio" id="depression_5_4" name="depression_5" value="Applied to me very much or most of the time"><label for="depression_5_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -219,6 +206,7 @@
                 <div class="options">
                     <input type="radio" id="depression_6_4" name="depression_6" value="Applied to me very much or most of the time"><label for="depression_6_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -235,6 +223,7 @@
                 <div class="options">
                     <input type="radio" id="depression_7_4" name="depression_7" value="Applied to me very much or most of the time"><label for="depression_7_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div class="button-group">
@@ -245,7 +234,7 @@
 
         <!-- Anxiety Section -->
         <section id="anxiety" class="question-section">
-            <h2><img src="{{ url_for('static', filename='images/anxiety.jpg') }}" alt="Anxiety"> Anxiety Questions</h2>
+            <h2><img src="{{ url_for('static', filename='images/anxiety.jpg') }}" alt="Anxiety"> Anxiety Assessment</h2>
 
             <div>
                 <label>1. I was aware of dryness of my mouth</label>
@@ -261,6 +250,7 @@
                 <div class="options">
                     <input type="radio" id="anxiety_1_4" name="anxiety_1" value="Applied to me very much or most of the time"><label for="anxiety_1_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -277,6 +267,7 @@
                 <div class="options">
                     <input type="radio" id="anxiety_2_4" name="anxiety_2" value="Applied to me very much or most of the time"><label for="anxiety_2_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -293,6 +284,7 @@
                 <div class="options">
                     <input type="radio" id="anxiety_3_4" name="anxiety_3" value="Applied to me very much or most of the time"><label for="anxiety_3_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -309,6 +301,7 @@
                 <div class="options">
                     <input type="radio" id="anxiety_4_4" name="anxiety_4" value="Applied to me very much or most of the time"><label for="anxiety_4_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -325,6 +318,7 @@
                 <div class="options">
                     <input type="radio" id="anxiety_5_4" name="anxiety_5" value="Applied to me very much or most of the time"><label for="anxiety_5_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -341,6 +335,7 @@
                 <div class="options">
                     <input type="radio" id="anxiety_6_4" name="anxiety_6" value="Applied to me very much or most of the time"><label for="anxiety_6_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -357,6 +352,7 @@
                 <div class="options">
                     <input type="radio" id="anxiety_7_4" name="anxiety_7" value="Applied to me very much or most of the time"><label for="anxiety_7_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div class="button-group">
@@ -367,7 +363,7 @@
 
         <!-- Stress Section -->
         <section id="stress" class="question-section">
-            <h2><img src="{{ url_for('static', filename='images/stress.jpg') }}" alt="Stress"> Stress Questions</h2>
+            <h2><img src="{{ url_for('static', filename='images/stress.jpg') }}" alt="Stress"> Stress Assessment</h2>
 
             <div>
                 <label>1. I found it hard to wind down</label>
@@ -383,6 +379,7 @@
                 <div class="options">
                     <input type="radio" id="stress_1_4" name="stress_1" value="Applied to me very much or most of the time"><label for="stress_1_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -399,6 +396,7 @@
                 <div class="options">
                     <input type="radio" id="stress_2_4" name="stress_2" value="Applied to me very much or most of the time"><label for="stress_2_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -415,6 +413,7 @@
                 <div class="options">
                     <input type="radio" id="stress_3_4" name="stress_3" value="Applied to me very much or most of the time"><label for="stress_3_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -431,6 +430,7 @@
                 <div class="options">
                     <input type="radio" id="stress_4_4" name="stress_4" value="Applied to me very much or most of the time"><label for="stress_4_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -447,6 +447,7 @@
                 <div class="options">
                     <input type="radio" id="stress_5_4" name="stress_5" value="Applied to me very much or most of the time"><label for="stress_5_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -463,6 +464,7 @@
                 <div class="options">
                     <input type="radio" id="stress_6_4" name="stress_6" value="Applied to me very much or most of the time"><label for="stress_6_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div>
@@ -479,6 +481,7 @@
                 <div class="options">
                     <input type="radio" id="stress_7_4" name="stress_7" value="Applied to me very much or most of the time"><label for="stress_7_4">Applied to me very much or most of the time</label>
                 </div>
+                <br>
                 <hr>
             </div>
             <div class="button-group">

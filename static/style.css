@@ -249,6 +249,14 @@ input[type="text"], input[type="number"], input[type="range"], select, button {
     outline: none;
 }
 
+.slider-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: #0072ff;
+    margin-top: 10px;
+    text-align: center;
+}
+
 /* input:focus {
     border-color: #3498db;
     box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
@@ -574,7 +582,7 @@ body {
 /* Gauge Meters */
 .gauge-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-top: 20px;
 }
 
@@ -592,7 +600,7 @@ canvas {
 .gauge p {
     text-align: center;
     font-size: 16px;
-    margin-top: -10px;
+    margin-top: 5px;
     font-weight: bold;
 }
 
@@ -632,3 +640,191 @@ li {
 #generate-pdf:hover {
     background-color: #45a049;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Global Styles for Responsiveness */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Responsive Container */
+.container {
+    max-width: 1200px;
+    width: 90%;
+    /* margin: 0 auto; */
+    padding: 20px;
+}
+
+/* Responsive Images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive Buttons 
+button {
+    width: 7%;
+    max-width: 250px;
+    padding: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+} */
+
+
+/* Risk Level Bar Responsive */
+#risk-bar-container {
+    width: 100%;
+    /* max-width: 600px; */
+    height: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+/* Risk Level Labels */
+.risk-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    width: 100%;
+    /* max-width: 600px; */
+}
+
+.risk-labels .label {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.2;
+    padding: 3px 5px;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+
+/* Adjust Gauge Meters */
+.gauge-container {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap; /* Allows stacking on small screens */
+    margin-top: 20px;
+}
+
+/* Individual Gauge */
+.gauge {
+    width: 250px; /* Increased size for better visibility */
+    height: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Ensure Canvases are Properly Centered */
+.gauge canvas {
+    display: block;
+    margin: 0 auto;
+}
+
+
+
+/* Responsive Recommendations Table */
+.recommendations-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.recommendations-container div {
+    flex: 1;
+    min-width: 250px;
+}
+
+/* Mobile Adjustments */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    h1, h2 {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+    section img {
+        width: 50%;
+    }
+
+    /* Stack Gauge Meters on Small Screens */
+    .gauge-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .gauge {
+        width: 200px;
+        height: 160px;
+    }
+
+    .risk-labels .label {
+        font-size: 10px; /* Reduce further for small screens */
+    }
+
+    /* Stack Gauges Vertically on Small Screens */
+    .gauge-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .gauge {
+        width: 220px;
+        height: 160px;
+    }
+
+    /* Risk Bar Adjustments */
+    #risk-bar-container {
+        width: 100%;
+        height: 20px;
+    }
+
+    /* Center Buttons */
+    .button-group {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    /* Adjust Table Layout */
+    .recommendations-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+

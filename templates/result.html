@@ -16,6 +16,14 @@
     <div id="result-container" class="container">
         <h1><img id="logo-img" src="{{ url_for('static', filename='images/logo.png') }}" alt="Mind Tapestry Logo"> Mind Tapestry</h1>
 
+        <!-- Loading Screen -->
+        <div id="loading-screen">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p>Generating your report...</p>
+            </div>
+        </div>
+
         <section>
             <h2><img src="{{ url_for('static', filename='images/result.jpg') }}" alt="Result" style="margin-bottom:0"> Mental Health Results</h2>
         </section>

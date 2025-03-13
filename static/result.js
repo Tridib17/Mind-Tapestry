@@ -36,20 +36,20 @@ function updateRiskBar(targetScore) {
             });
 
             currentScore++;
-            setTimeout(animate, 500); // Adjust speed for smooth transition
+            setTimeout(animate, 200); // Adjust speed for smooth transition
         }
     }
 
     animate();
 }
 
-// Function to create an even larger semi-circular gauge meter
 function animateGauge(canvasId, targetScore) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext("2d");
 
-    canvas.width = 250;
-    canvas.height = 150;
+    // Ensure consistent dimensions for all gauges
+    canvas.width = 260;
+    canvas.height = 170;
 
     let currentScore = 0;
 
@@ -57,49 +57,53 @@ function animateGauge(canvasId, targetScore) {
         const width = canvas.width;
         const height = canvas.height;
         const centerX = width / 2;
-        const centerY = height * 1.2;  // Adjusted positioning
-        const radius = Math.min(width, height) * 0.7;
-        
+        const centerY = height;
+        const radius = Math.min(width, height) * 0.6;
+        const needleLength = radius * 0.95;
+        const needleBaseOffset = 15;
+
         ctx.clearRect(0, 0, width, height);
 
         // Background Arc (Gray)
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, Math.PI, 0, false);
         ctx.strokeStyle = "#ddd";
-        ctx.lineWidth = 50;  // Thicker arc
+        ctx.lineWidth = 40;
         ctx.stroke();
 
         // Progress Arc (Colored)
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, Math.PI, Math.PI + (Math.PI * (score / 100)), false);
         ctx.strokeStyle = getGaugeColor(score);
-        ctx.lineWidth = 50;  // Thicker stroke
+        ctx.lineWidth = 40;
         ctx.stroke();
 
         // Needle
         const angle = Math.PI + (Math.PI * (score / 100));
-        const needleX = centerX + Math.cos(angle) * radius;
-        const needleY = centerY + Math.sin(angle) * radius;
+        const needleBaseX = centerX + Math.cos(angle) * needleBaseOffset;
+        const needleBaseY = centerY + Math.sin(angle) * needleBaseOffset;
+        const needleX = centerX + Math.cos(angle) * needleLength;
+        const needleY = centerY + Math.sin(angle) * needleLength;
 
         ctx.beginPath();
-        ctx.moveTo(centerX, centerY);
+        ctx.moveTo(needleBaseX, needleBaseY); // Adjusted start position
         ctx.lineTo(needleX, needleY);
         ctx.strokeStyle = "black";
-        ctx.lineWidth = 4;  // Thicker needle
+        ctx.lineWidth = 8; // Thicker needle for better visibility
         ctx.stroke();
 
         // Score Text
-        ctx.font = "bold 26px Arial";  // Even larger font
+        ctx.font = "bold 28px Arial";
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
-        ctx.fillText(`${score}%`, centerX, centerY - radius - 40);  // Adjusted positioning
+        ctx.fillText(`${score}%`, centerX, centerY - radius - 30); // Adjusted position
     }
 
     function update() {
-        if (currentScore < targetScore) {
-            currentScore++;
+        if (currentScore <= targetScore) {
             drawGauge(currentScore);
-            setTimeout(update, 25);  // Smooth animation
+            setTimeout(update, 25);
+            currentScore++;
         }
     }
 
@@ -113,6 +117,8 @@ function getGaugeColor(score) {
     if (score <= 75) return "orange";
     return "red";
 }
+
+
 
 // Dynamic Do's, Don'ts, and Suggestions Based on Risk Level
 function updateRecommendations(score) {
@@ -221,116 +227,140 @@ function updateRecommendations(score) {
 }
 
 function generatePDF() {
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF("p", "mm", "a4");
+    // Show the loading screen
+    document.getElementById("loading-screen").classList.add("show");
 
-    let yPos = 10; // Initial y position
+    setTimeout(() => {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF("p", "mm", "a4");
 
-    // Add Logo and Name Side by Side
-    const logo = document.getElementById("logo-img");
-    if (logo && logo.src) {
-        pdf.addImage(logo.src, "PNG", 55, yPos, 50, 50); // Enlarged sideways
-    }
+        let pageWidth = pdf.internal.pageSize.getWidth();
+        let pageHeight = pdf.internal.pageSize.height;
+        let margin = 10; // Margin for the border
 
-    // Add "Mind Tapestry" beside the logo
-    pdf.setFont("helvetica", "italic");
-    pdf.setFontSize(18);
-    pdf.setTextColor(100); // Light gray color to match the webpage
-    pdf.text("Mind Tapestry", 110, yPos + 25); // Adjusted position beside logo
+        // Draw a border around the entire page
+        pdf.setDrawColor(0); // Black border
+        pdf.setLineWidth(1);
+        pdf.rect(5, 5, pdf.internal.pageSize.width - 10, pdf.internal.pageSize.height - 10); 
 
-    yPos += 50; // Adjust spacing for the next section
 
-    // Add Report Title
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(22);
-    pdf.setTextColor(0);
-    pdf.text("Mental Health Report", 105, yPos, { align: "center" });
+        let yPos = 5; // Initial y position
 
-    yPos += 15;
-
-    // Add Risk Level Section
-    pdf.setFontSize(16);
-    pdf.text("Your Risk Level:", 105, yPos, { align: "center" });
-
-    const riskContainer = document.getElementById("risk-bar-container");
-    const riskLabels = document.querySelector(".risk-labels");
-
-    if (riskContainer && riskLabels) {
-        const riskCaptureDiv = document.createElement("div");
-        riskCaptureDiv.style.position = "absolute";
-        riskCaptureDiv.style.left = "-9999px";
-        riskCaptureDiv.appendChild(riskContainer.cloneNode(true));
-        riskCaptureDiv.appendChild(riskLabels.cloneNode(true));
-
-        document.body.appendChild(riskCaptureDiv);
-
-        html2canvas(riskCaptureDiv, { scale: 2 }).then(canvas => {
-            const riskBarImg = canvas.toDataURL("image/png");
-            pdf.addImage(riskBarImg, "PNG", 40, yPos + 5, 130, 20);
-            document.body.removeChild(riskCaptureDiv);
-            addGaugeMeters(pdf, yPos + 40);
-        });
-    } else {
-        addGaugeMeters(pdf, yPos + 40);
-    }
-}
-
-function addGaugeMeters(pdf, yPos) {
-    pdf.setFontSize(16);
-    pdf.text("Your Scores:", 105, yPos, { align: "center" });
-
-    const gaugeData = [
-        { label: "Depression", id: "depression-gauge" },
-        { label: "Anxiety", id: "anxiety-gauge" },
-        { label: "Stress", id: "stress-gauge" }
-    ];
-
-    let xPos = 20;
-
-    gaugeData.forEach(({ label, id }) => {
-        const canvas = document.getElementById(id);
-        if (canvas) {
-            const imgData = canvas.toDataURL("image/png");
-            pdf.addImage(imgData, "PNG", xPos, yPos, 50, 40);
-            pdf.text(label, xPos + 25, yPos + 45, { align: "center" });
+        // Add Logo and Name Side by Side
+        const logo = document.getElementById("logo-img");
+        if (logo && logo.src) {
+            pdf.addImage(logo.src, "PNG", 40, yPos, 50, 50); // Enlarged sideways
         }
-        xPos += 60;
-    });
+    
+        // Add "Mind Tapestry" beside the logo
+        pdf.setFont("helvetica", "italic");
+        pdf.setFontSize(35);
+        pdf.setTextColor(100); // Light gray color to match the webpage
+        pdf.text("Mind Tapestry", 95, yPos + 25); // Adjusted position beside logo
 
-    addRecommendations(pdf, yPos + 65);
-}
+        yPos += 55; // Adjust spacing for the next section
 
-function addRecommendations(pdf, yPos) {
-    pdf.setFontSize(16);
-    pdf.text("Recommendations:", 105, yPos, { align: "center" });
-    yPos += 5;
+        // Add Report Title
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(22);
+        pdf.setTextColor(0);
+        pdf.text("Mental Health Report", 105, yPos, { align: "center" });
 
-    const headers = [["Do's", "Don'ts", "Suggestions"]];
-    const dos = [...document.querySelectorAll("#dos-list li")].map(li => li.innerText).filter(text => text.trim());
-    const donts = [...document.querySelectorAll("#donts-list li")].map(li => li.innerText).filter(text => text.trim());
-    const suggestions = [...document.querySelectorAll("#suggestions-list li")].map(li => li.innerText).filter(text => text.trim());
+        yPos += 15;
 
-    const maxRows = Math.max(dos.length, donts.length, suggestions.length);
-    const data = Array.from({ length: maxRows }, (_, i) => [
-        dos[i] || "", 
-        donts[i] || "", 
-        suggestions[i] || ""
-    ]);
+        // Add Risk Level Section
+        pdf.setFontSize(16);
+        pdf.text("Your Risk Level:", 105, yPos, { align: "center" });
 
-    pdf.autoTable({
-        startY: yPos,
-        head: headers,
-        body: data,
-        theme: "grid",
-        styles: { fontSize: 10, cellPadding: 3 },
-        headStyles: { fillColor: [240, 240, 240], textColor: 0 },
-        columnStyles: { 0: { cellWidth: "auto" }, 1: { cellWidth: "auto" }, 2: { cellWidth: "auto" } }
-    });
+        const riskContainer = document.getElementById("risk-bar-container");
+        const riskLabels = document.querySelector(".risk-labels");
 
-    // Create Blob URL for the PDF
-    const pdfBlob = pdf.output("blob");
-    const pdfURL = URL.createObjectURL(pdfBlob);
+        if (riskContainer && riskLabels) {
+            const riskCaptureDiv = document.createElement("div");
+            riskCaptureDiv.style.position = "absolute";
+            riskCaptureDiv.style.left = "-9999px";
+            riskCaptureDiv.appendChild(riskContainer.cloneNode(true));
+            riskCaptureDiv.appendChild(riskLabels.cloneNode(true));
 
-    // Open the PDF in a new tab
-    window.open(pdfURL, "_blank");
+            document.body.appendChild(riskCaptureDiv);
+
+            html2canvas(riskCaptureDiv, { scale: 2 }).then(canvas => {
+                const riskBarImg = canvas.toDataURL("image/png");
+                pdf.addImage(riskBarImg, "PNG", 15, yPos + 5, 180, 20);
+                document.body.removeChild(riskCaptureDiv);
+                addGaugeMeters(pdf, yPos + 40);
+            });
+        } else {
+            addGaugeMeters(pdf, yPos + 40);
+        }
+
+    function addGaugeMeters(pdf, yPos) {
+        pdf.setFontSize(16);
+        pdf.text("Your Scores:", 105, yPos, { align: "center" });
+
+        const gaugeData = [
+            { label: "Depression", id: "depression-gauge" },
+            { label: "Anxiety", id: "anxiety-gauge" },
+            { label: "Stress", id: "stress-gauge" }
+        ];
+
+        let xPos = 15;
+
+        gaugeData.forEach(({ label, id }) => {
+            const canvas = document.getElementById(id);
+            if (canvas) {
+                const imgData = canvas.toDataURL("image/png");
+                pdf.addImage(imgData, "PNG", xPos, yPos, 50, 40);
+                pdf.text(label, xPos + 25, yPos + 45, { align: "center" });
+            }
+            xPos += 65;
+        });
+
+        addRecommendations(pdf, yPos + 65);
+    }
+
+    function addRecommendations(pdf, yPos) {
+        pdf.setFontSize(16);
+        pdf.text("Recommendations:", 105, yPos, { align: "center" });
+        yPos += 5;
+
+        const headers = [["Do's", "Don'ts", "Suggestions"]];
+        const dos = [...document.querySelectorAll("#dos-list li")].map(li => li.innerText).filter(text => text.trim());
+        const donts = [...document.querySelectorAll("#donts-list li")].map(li => li.innerText).filter(text => text.trim());
+        const suggestions = [...document.querySelectorAll("#suggestions-list li")].map(li => li.innerText).filter(text => text.trim());
+
+        const maxRows = Math.max(dos.length, donts.length, suggestions.length);
+        const data = Array.from({ length: maxRows }, (_, i) => [
+            dos[i] || "", 
+            donts[i] || "", 
+            suggestions[i] || ""
+        ]);
+
+        pdf.autoTable({
+            startY: yPos,
+            head: headers,
+            body: data,
+            theme: "grid",
+            styles: { fontSize: 10, cellPadding: 3 },
+            headStyles: { fillColor: [240, 240, 240], textColor: 0 },
+            columnStyles: { 0: { cellWidth: "auto" }, 1: { cellWidth: "auto" }, 2: { cellWidth: "auto" } }
+        });
+
+        
+        // Draw Border Again (For pages with recommendations)
+        pdf.setLineWidth(1);
+        pdf.rect(5, 5, pdf.internal.pageSize.width - 10, pdf.internal.pageSize.height - 10);
+
+
+            // Create Blob URL for the PDF
+            const pdfBlob = pdf.output("blob");
+            const pdfURL = URL.createObjectURL(pdfBlob);
+
+            // Hide the loading screen
+            document.getElementById("loading-screen").classList.remove("show");
+
+            // Open the PDF in a new tab
+            window.open(pdfURL, "_blank");
+        }
+    }, 2500); // Loading animation for 2.5 seconds
 }

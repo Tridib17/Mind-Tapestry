@@ -47,10 +47,17 @@ function validateSection(sectionId) {
                     if (!firstInvalidField) firstInvalidField = input;
 
                     errorElement.innerText = "Please select an option.";
-                    input.closest("div").parentElement.appendChild(errorElement);
+                    const parentDiv = input.closest("div").parentElement;
+                    
+                    if (parentDiv.lastElementChild.tagName === "HR") {
+                        parentDiv.insertBefore(errorElement, parentDiv.lastElementChild);
+                    } else {
+                        parentDiv.appendChild(errorElement);
+                    }
                 }
             }
         }
+
 
         // Validation for text, number, dropdowns, and range
         if (input.id === "age") {
@@ -118,9 +125,9 @@ function attachDynamicValidation() {
     document.querySelectorAll("input[required], select[required], input[type=radio]").forEach(input => {
         if (input.type === "radio") {
             input.addEventListener("change", () => {
-                const errorMessage = input.closest("div").parentElement.lastElementChild;
-
-                if (errorMessage && errorMessage.classList.contains('error-message')) {
+                const parentDiv = input.closest("div").parentElement;
+                const errorMessage = parentDiv.querySelector(".error-message");
+                if (errorMessage) {
                     errorMessage.remove();
                 }
             });
@@ -355,3 +362,29 @@ function fillRandomResponses() {
 
     console.log("✅ Form filled with random values!");
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const slider = document.getElementById("financial-stress");
+    const valueDisplay = document.getElementById("selected-value");
+
+    // Define labels for each stress level
+    const stressLevels = [
+        "No Stress",
+        "Mild Stress",
+        "Moderate Stress",
+        "High Stress",
+        "Severe Stress"
+    ];
+
+    function updateValueDisplay(value) {
+        valueDisplay.textContent = `Selected: ${value} (${stressLevels[value - 1]})`;
+    }
+
+    // Update value dynamically on slider input
+    slider.addEventListener("input", function () {
+        updateValueDisplay(this.value);
+    });
+
+    // Initialize with default value
+    updateValueDisplay(slider.value);
+});
