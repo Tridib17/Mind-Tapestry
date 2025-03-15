@@ -19,9 +19,6 @@
             </div>
         </div>
 
-        <!-- Message Box
-        <div id="message-box" class="message-box"></div> -->
-                
         <!-- Personal Details Section -->
         <section id="personal-details" class="question-section active">
             <h2><img src="{{ url_for('static', filename='images/personal_details.png') }}" alt="Personal Details"> Personal Details</h2>
@@ -92,9 +89,9 @@
                 </select>
             </div>
             <div class="slider-container">
-                <label for="financial-stress">How would you rate your financial stress?</label>
-                <input type="range" id="financial-stress" min="1" max="5" step="1" value="2">
-                <div id="selected-value" class="slider-value">Selected: 2 (Mild Stress)</div>
+                <label for="financial-stress">How would you rate your financial stress? (On the scale of 1 to 5)</label>
+                <input type="range" id="financial-stress" min="1" max="5" step="1" value="3">
+                <div id="selected-value" class="slider-value"></div>
             </div>
             
             
@@ -106,126 +103,7 @@
         <!-- Depression Section -->
         <section id="depression" class="question-section">
             <h2><img src="{{ url_for('static', filename='images/depression.jpeg') }}" alt="Depression"> Depression Assessment</h2>
-
-            <div>
-                <label>1. I couldn't seem to experience any positive feeling at all</label>
-                <div class="options">
-                    <input type="radio" id="depression_1_1" name="depression_1" value="Did not apply to me at all"><label for="depression_1_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_1_2" name="depression_1" value="Applied to me to some degree, or some of the time"><label for="depression_1_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_1_3" name="depression_1" value="Applied to me to a considerable degree or a good part of time"><label for="depression_1_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_1_4" name="depression_1" value="Applied to me very much or most of the time"><label for="depression_1_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>2. I found it difficult to work up the initiative to do things</label>
-                <div class="options">
-                    <input type="radio" id="depression_2_1" name="depression_2" value="Did not apply to me at all"><label for="depression_2_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_2_2" name="depression_2" value="Applied to me to some degree, or some of the time"><label for="depression_2_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_2_3" name="depression_2" value="Applied to me to a considerable degree or a good part of time"><label for="depression_2_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_2_4" name="depression_2" value="Applied to me very much or most of the time"><label for="depression_2_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>3. I felt that I had nothing to look forward to</label>
-                <div class="options">
-                    <input type="radio" id="depression_3_1" name="depression_3" value="Did not apply to me at all"><label for="depression_3_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_3_2" name="depression_3" value="Applied to me to some degree, or some of the time"><label for="depression_3_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_3_3" name="depression_3" value="Applied to me to a considerable degree or a good part of time"><label for="depression_3_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_3_4" name="depression_3" value="Applied to me very much or most of the time"><label for="depression_3_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>4. I felt down-hearted and blue</label>
-                <div class="options">
-                    <input type="radio" id="depression_4_1" name="depression_4" value="Did not apply to me at all"><label for="depression_4_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_4_2" name="depression_4" value="Applied to me to some degree, or some of the time"><label for="depression_4_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_4_3" name="depression_4" value="Applied to me to a considerable degree or a good part of time"><label for="depression_4_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_4_4" name="depression_4" value="Applied to me very much or most of the time"><label for="depression_4_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>5. I was unable to become enthusiastic about anything</label>
-                <div class="options">
-                    <input type="radio" id="depression_5_1" name="depression_5" value="Did not apply to me at all"><label for="depression_5_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_5_2" name="depression_5" value="Applied to me to some degree, or some of the time"><label for="depression_5_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_5_3" name="depression_5" value="Applied to me to a considerable degree or a good part of time"><label for="depression_5_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_5_4" name="depression_5" value="Applied to me very much or most of the time"><label for="depression_5_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>6. I felt I wasn't worth much as a person</label>
-                <div class="options">
-                    <input type="radio" id="depression_6_1" name="depression_6" value="Did not apply to me at all"><label for="depression_6_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_6_2" name="depression_6" value="Applied to me to some degree, or some of the time"><label for="depression_6_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_6_3" name="depression_6" value="Applied to me to a considerable degree or a good part of time"><label for="depression_6_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_6_4" name="depression_6" value="Applied to me very much or most of the time"><label for="depression_6_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>7. I felt that life was meaningless</label>
-                <div class="options">
-                    <input type="radio" id="depression_7_1" name="depression_7" value="Did not apply to me at all"><label for="depression_7_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_7_2" name="depression_7" value="Applied to me to some degree, or some of the time"><label for="depression_7_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_7_3" name="depression_7" value="Applied to me to a considerable degree or a good part of time"><label for="depression_7_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="depression_7_4" name="depression_7" value="Applied to me very much or most of the time"><label for="depression_7_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
+            <div id="depression-questions"></div>
             <div class="button-group">
                 <button onclick="prevSection('personal-details')">Previous</button>
                 <button onclick="nextSection('anxiety')">Next</button>
@@ -235,126 +113,7 @@
         <!-- Anxiety Section -->
         <section id="anxiety" class="question-section">
             <h2><img src="{{ url_for('static', filename='images/anxiety.jpg') }}" alt="Anxiety"> Anxiety Assessment</h2>
-
-            <div>
-                <label>1. I was aware of dryness of my mouth</label>
-                <div class="options">
-                    <input type="radio" id="anxiety_1_1" name="anxiety_1" value="Did not apply to me at all"><label for="anxiety_1_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_1_2" name="anxiety_1" value="Applied to me to some degree, or some of the time"><label for="anxiety_1_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_1_3" name="anxiety_1" value="Applied to me to a considerable degree or a good part of time"><label for="anxiety_1_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_1_4" name="anxiety_1" value="Applied to me very much or most of the time"><label for="anxiety_1_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>2. I experienced breathing difficulty (e.g. excessively rapid breathing, breathlessness in the absence of physical exertion)</label>
-                <div class="options">
-                    <input type="radio" id="anxiety_2_1" name="anxiety_2" value="Did not apply to me at all"><label for="anxiety_2_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_2_2" name="anxiety_2" value="Applied to me to some degree, or some of the time"><label for="anxiety_2_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_2_3" name="anxiety_2" value="Applied to me to a considerable degree or a good part of time"><label for="anxiety_2_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_2_4" name="anxiety_2" value="Applied to me very much or most of the time"><label for="anxiety_2_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>3. I experienced trembling (e.g. in the hands)</label>
-                <div class="options">
-                    <input type="radio" id="anxiety_3_1" name="anxiety_3" value="Did not apply to me at all"><label for="anxiety_3_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_3_2" name="anxiety_3" value="Applied to me to some degree, or some of the time"><label for="anxiety_3_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_3_3" name="anxiety_3" value="Applied to me to a considerable degree or a good part of time"><label for="anxiety_3_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_3_4" name="anxiety_3" value="Applied to me very much or most of the time"><label for="anxiety_3_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>4. I was worried about situations in which I might panic and make a fool of myself</label>
-                <div class="options">
-                    <input type="radio" id="anxiety_4_1" name="anxiety_4" value="Did not apply to me at all"><label for="anxiety_4_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_4_2" name="anxiety_4" value="Applied to me to some degree, or some of the time"><label for="anxiety_4_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_4_3" name="anxiety_4" value="Applied to me to a considerable degree or a good part of time"><label for="anxiety_4_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_4_4" name="anxiety_4" value="Applied to me very much or most of the time"><label for="anxiety_4_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>5. I felt I was close to panic</label>
-                <div class="options">
-                    <input type="radio" id="anxiety_5_1" name="anxiety_5" value="Did not apply to me at all"><label for="anxiety_5_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_5_2" name="anxiety_5" value="Applied to me to some degree, or some of the time"><label for="anxiety_5_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_5_3" name="anxiety_5" value="Applied to me to a considerable degree or a good part of time"><label for="anxiety_5_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_5_4" name="anxiety_5" value="Applied to me very much or most of the time"><label for="anxiety_5_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>6. I was aware of the action of my heart in the absence of physical exertion (e.g. sense of heart rate increase, heart missing a beat)</label>
-                <div class="options">
-                    <input type="radio" id="anxiety_6_1" name="anxiety_6" value="Did not apply to me at all"><label for="anxiety_6_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_6_2" name="anxiety_6" value="Applied to me to some degree, or some of the time"><label for="anxiety_6_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_6_3" name="anxiety_6" value="Applied to me to a considerable degree or a good part of time"><label for="anxiety_6_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_6_4" name="anxiety_6" value="Applied to me very much or most of the time"><label for="anxiety_6_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>7. I felt scared without any good reason</label>
-                <div class="options">
-                    <input type="radio" id="anxiety_7_1" name="anxiety_7" value="Did not apply to me at all"><label for="anxiety_7_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_7_2" name="anxiety_7" value="Applied to me to some degree, or some of the time"><label for="anxiety_7_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_7_3" name="anxiety_7" value="Applied to me to a considerable degree or a good part of time"><label for="anxiety_7_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="anxiety_7_4" name="anxiety_7" value="Applied to me very much or most of the time"><label for="anxiety_7_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
+            <div id="anxiety-questions"></div>
             <div class="button-group">
                 <button onclick="prevSection('depression')">Previous</button>
                 <button onclick="nextSection('stress')">Next</button>
@@ -364,126 +123,7 @@
         <!-- Stress Section -->
         <section id="stress" class="question-section">
             <h2><img src="{{ url_for('static', filename='images/stress.jpg') }}" alt="Stress"> Stress Assessment</h2>
-
-            <div>
-                <label>1. I found it hard to wind down</label>
-                <div class="options">
-                    <input type="radio" id="stress_1_1" name="stress_1" value="Did not apply to me at all"><label for="stress_1_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_1_2" name="stress_1" value="Applied to me to some degree, or some of the time"><label for="stress_1_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_1_3" name="stress_1" value="Applied to me to a considerable degree or a good part of time"><label for="stress_1_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_1_4" name="stress_1" value="Applied to me very much or most of the time"><label for="stress_1_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>2. I tended to over-react to situations</label>
-                <div class="options">
-                    <input type="radio" id="stress_2_1" name="stress_2" value="Did not apply to me at all"><label for="stress_2_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_2_2" name="stress_2" value="Applied to me to some degree, or some of the time"><label for="stress_2_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_2_3" name="stress_2" value="Applied to me to a considerable degree or a good part of time"><label for="stress_2_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_2_4" name="stress_2" value="Applied to me very much or most of the time"><label for="stress_2_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>3. I felt that I was using a lot of nervous energy</label>
-                <div class="options">
-                    <input type="radio" id="stress_3_1" name="stress_3" value="Did not apply to me at all"><label for="stress_3_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_3_2" name="stress_3" value="Applied to me to some degree, or some of the time"><label for="stress_3_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_3_3" name="stress_3" value="Applied to me to a considerable degree or a good part of time"><label for="stress_3_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_3_4" name="stress_3" value="Applied to me very much or most of the time"><label for="stress_3_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>4. I found myself getting agitated</label>
-                <div class="options">
-                    <input type="radio" id="stress_4_1" name="stress_4" value="Did not apply to me at all"><label for="stress_4_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_4_2" name="stress_4" value="Applied to me to some degree, or some of the time"><label for="stress_4_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_4_3" name="stress_4" value="Applied to me to a considerable degree or a good part of time"><label for="stress_4_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_4_4" name="stress_4" value="Applied to me very much or most of the time"><label for="stress_4_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>5. I found it difficult to relax</label>
-                <div class="options">
-                    <input type="radio" id="stress_5_1" name="stress_5" value="Did not apply to me at all"><label for="stress_5_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_5_2" name="stress_5" value="Applied to me to some degree, or some of the time"><label for="stress_5_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_5_3" name="stress_5" value="Applied to me to a considerable degree or a good part of time"><label for="stress_5_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_5_4" name="stress_5" value="Applied to me very much or most of the time"><label for="stress_5_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>6. I was intolerant of anything that kept me from getting on with what I was doing</label>
-                <div class="options">
-                    <input type="radio" id="stress_6_1" name="stress_6" value="Did not apply to me at all"><label for="stress_6_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_6_2" name="stress_6" value="Applied to me to some degree, or some of the time"><label for="stress_6_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_6_3" name="stress_6" value="Applied to me to a considerable degree or a good part of time"><label for="stress_6_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_6_4" name="stress_6" value="Applied to me very much or most of the time"><label for="stress_6_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
-            <div>
-                <label>7. I felt that I was rather touchy</label>
-                <div class="options">
-                    <input type="radio" id="stress_7_1" name="stress_7" value="Did not apply to me at all"><label for="stress_7_1">Did not apply to me at all</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_7_2" name="stress_7" value="Applied to me to some degree, or some of the time"><label for="stress_7_2">Applied to me to some degree, or some of the time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_7_3" name="stress_7" value="Applied to me to a considerable degree or a good part of time"><label for="stress_7_3">Applied to me to a considerable degree or a good part of time</label>
-                </div>
-                <div class="options">
-                    <input type="radio" id="stress_7_4" name="stress_7" value="Applied to me very much or most of the time"><label for="stress_7_4">Applied to me very much or most of the time</label>
-                </div>
-                <br>
-                <hr>
-            </div>
+            <div id="stress-questions"></div>
             <div class="button-group">
                 <button onclick="prevSection('anxiety')">Previous</button>
                 <button onclick="showPreview()">Preview</button>

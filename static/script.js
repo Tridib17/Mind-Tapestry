@@ -1,3 +1,108 @@
+const questionsData = {
+    depression: [
+        "I couldn't seem to experience any positive feeling at all",
+        "I found it difficult to work up the initiative to do things",
+        "I felt that I had nothing to look forward to",
+        "I felt down-hearted and blue",
+        "I was unable to become enthusiastic about anything",
+        "I felt I wasn't worth much as a person",
+        "I felt that life was meaningless"
+    ],
+    anxiety: [
+        "I was aware of dryness of my mouth",
+        "I experienced breathing difficulty",
+        "I experienced trembling",
+        "I was worried about situations in which I might panic",
+        "I felt I was close to panic",
+        "I was aware of the action of my heart in the absence of physical exertion",
+        "I felt scared without any good reason"
+    ],
+    stress: [
+        "I found it hard to wind down",
+        "I tended to over-react to situations",
+        "I felt that I was using a lot of nervous energy",
+        "I found myself getting agitated",
+        "I found it difficult to relax",
+        "I was intolerant of anything that kept me from getting on with what I was doing",
+        "I felt that I was rather touchy"
+    ]
+};
+
+const options = [
+    "Did not apply to me at all",
+    "Applied to me to some degree, or some of the time",
+    "Applied to me to a considerable degree or a good part of time",
+    "Applied to me very much or most of the time"
+];
+
+function generateQuestions(section) {
+    const container = document.getElementById(`${section}-questions`);
+    container.innerHTML = ""; // Clear previous content
+    
+    questionsData[section].forEach((question, index) => {
+        const div = document.createElement("div");
+        div.classList.add("question-item");
+
+        div.innerHTML = `<label>${index + 1}. ${question}</label>`;
+
+        options.forEach((option, optionIndex) => {
+            const radioDiv = document.createElement("div");
+            radioDiv.classList.add("options");
+
+            const input = document.createElement("input");
+            input.type = "radio";
+            input.name = `${section}_${index + 1}`;
+            input.id = `${section}_${index + 1}_${optionIndex + 1}`;
+            input.value = option;
+
+            const label = document.createElement("label");
+            label.htmlFor = input.id;
+            label.innerText = option;
+
+            radioDiv.appendChild(input);
+            radioDiv.appendChild(label);
+            div.appendChild(radioDiv);
+        });
+
+        div.appendChild(document.createElement("hr"));
+        div.appendChild(document.createElement("br"));
+
+        container.appendChild(div);
+    });
+}
+
+// Generate questions on page load
+document.addEventListener("DOMContentLoaded", () => {
+    generateQuestions("depression");
+    generateQuestions("anxiety");
+    generateQuestions("stress");
+
+    const slider = document.getElementById("financial-stress");
+    const valueDisplay = document.getElementById("selected-value");
+
+    // Define labels for each stress level
+    const stressLevels = [
+        "No Stress",
+        "Mild Stress",
+        "Moderate Stress",
+        "High Stress",
+        "Severe Stress"
+    ];
+
+    function updateValueDisplay(value) {
+        valueDisplay.textContent = `Selected Level: ${value} (${stressLevels[value - 1]})`;
+    }
+
+    // Update value dynamically on slider input
+    slider.addEventListener("input", function () {
+        updateValueDisplay(this.value);
+    });
+
+    // Initialize with default value
+    updateValueDisplay(slider.value);
+});
+
+
 let currentSection = "personal-details";
 
 function nextSection(nextId) {
@@ -12,6 +117,7 @@ function prevSection(prevId) {
     document.getElementById(prevId).classList.add("active");
     currentSection = prevId;
 }
+
 
 function validateSection(sectionId) {
     const section = document.getElementById(sectionId);
@@ -209,54 +315,59 @@ function smoothScrollTo(element) {
 // Initialize dynamic validation on page load
 document.addEventListener("DOMContentLoaded", attachDynamicValidation);
 
-
 function showPreview() {
     if (!validateSection(currentSection)) return;
 
     const previewContent = document.getElementById("preview-content");
+    previewContent.innerHTML = ""; // Clear previous content
 
-    // Personal Details
-    const age = document.getElementById("age").value;
-    const gender = document.querySelector('input[name="gender"]:checked')?.value || "Not provided";
-    const cgpa = document.getElementById("cgpa").value;
-    const sleepQuality = document.getElementById("sleep-quality").value || "Not selected";
-    const physicalActivity = document.getElementById("physical-activity").value || "Not selected";
-    const dietQuality = document.getElementById("diet-quality").value || "Not selected";
-    const chronicConditions = document.querySelector('input[name="chronic-conditions"]:checked')?.value || "Not provided";
-    const extracurricular = document.getElementById("extracurricular").value || "Not selected";
-    const financialStress = document.getElementById("financial-stress").value;
-
-    previewContent.innerHTML = `
-        <h3>Personal Details</h3>
-        <p><strong>Age:</strong> ${age}</p>
-        <p><strong>Gender:</strong> ${gender}</p>
-        <p><strong>CGPA:</strong> ${cgpa}</p>
-        <p><strong>Sleep Quality:</strong> ${sleepQuality}</p>
-        <p><strong>Physical Activity:</strong> ${physicalActivity}</p>
-        <p><strong>Diet Quality:</strong> ${dietQuality}</p>
-        <p><strong>Chronic Medical Conditions:</strong> ${chronicConditions}</p>
-        <p><strong>Extracurricular Activities:</strong> ${extracurricular}</p>
-        <p><strong>Financial Stress:</strong> ${financialStress} / 5</p>
+    // Collect and display personal details
+    previewContent.innerHTML += `
+        <h3>Personal Details</h3><br>
+        <p><strong>Age:</strong> ${document.getElementById("age").value}</p>
+        <p><strong>Gender:</strong> ${getRadioValue("gender")}</p>
+        <p><strong>CGPA:</strong> ${document.getElementById("cgpa").value}</p>
+        <p><strong>Sleep Quality:</strong> ${document.getElementById("sleep-quality").value}</p>
+        <p><strong>Physical Activity:</strong> ${document.getElementById("physical-activity").value}</p>
+        <p><strong>Diet Quality:</strong> ${document.getElementById("diet-quality").value}</p>
+        <p><strong>Chronic Medical Conditions:</strong> ${getRadioValue("chronic-conditions")}</p>
+        <p><strong>Extracurricular Activities:</strong> ${document.getElementById("extracurricular").value}</p>
+        <p><strong>Financial Stress:</strong> ${document.getElementById("financial-stress").value} / 5</p>
         <br>
-        <h3>Responses</h3>
-        <div>${getAnswers('depression', 'Depression Questions')}</div>
-        <div>${getAnswers('anxiety', 'Anxiety Questions')}</div>
-        <div>${getAnswers('stress', 'Stress Questions')}</div>
     `;
 
-    nextSection('preview');
+    // Generate dynamic sections for Depression, Anxiety, and Stress
+    previewContent.innerHTML += `<h3>Responses</h3><br>`;
+    previewContent.innerHTML += generatePreviewSection("depression");
+    previewContent.innerHTML += generatePreviewSection("anxiety");
+    previewContent.innerHTML += generatePreviewSection("stress");
+
+    // Navigate to preview section
+    nextSection("preview");
 }
 
-
-function getAnswers(category, title) {
-    let answersHTML = `<h4>${title}</h4>`;
-    const questions = document.querySelectorAll(`#${category} > div > label`);
-    questions.forEach((question, index) => {
-        const answer = document.querySelector(`input[name="${category}_${index + 1}"]:checked`);
-        answersHTML += `<p>${question.innerText} - <strong>${answer ? answer.value : 'Not answered'}</strong></p>`;
+// Function to generate preview content for each section dynamically
+function generatePreviewSection(section) {
+    let sectionHTML = `<div><h4>${capitalize(section)} Questions</h4><div style="margin-left: 20px;">`;
+    questionsData[section].forEach((question, index) => {
+        let response = getRadioValue(`${section}_${index + 1}`) || "Not answered";
+        sectionHTML += `<p>${index + 1}. ${question} - <strong>${response}</strong></p>`;
     });
-    return answersHTML;
+    sectionHTML += `</div></div><br>`; // Close the indented div
+    return sectionHTML;
 }
+
+// Helper function to get selected radio button value
+function getRadioValue(name) {
+    const checkedOption = document.querySelector(`input[name="${name}"]:checked`);
+    return checkedOption ? checkedOption.value : "Not provided";
+}
+
+// Helper function to capitalize section names
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 
 function submitForm() {
     if (!validateSection(currentSection)) return;
@@ -362,29 +473,3 @@ function fillRandomResponses() {
 
     console.log("✅ Form filled with random values!");
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-    const slider = document.getElementById("financial-stress");
-    const valueDisplay = document.getElementById("selected-value");
-
-    // Define labels for each stress level
-    const stressLevels = [
-        "No Stress",
-        "Mild Stress",
-        "Moderate Stress",
-        "High Stress",
-        "Severe Stress"
-    ];
-
-    function updateValueDisplay(value) {
-        valueDisplay.textContent = `Selected: ${value} (${stressLevels[value - 1]})`;
-    }
-
-    // Update value dynamically on slider input
-    slider.addEventListener("input", function () {
-        updateValueDisplay(this.value);
-    });
-
-    // Initialize with default value
-    updateValueDisplay(slider.value);
-});

@@ -13,14 +13,14 @@ body {
     background: linear-gradient(120deg, #74ebd5, #9face6);
     color: #444;
     /* font-family: Arial, sans-serif; */
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     /* background: linear-gradient(to right, #74ebd5, #acb6e5); */
-}
-
-body {
     animation: fadeInPage 1s ease-in-out;
 }
 
@@ -36,10 +36,10 @@ body {
 .container {
     background: white;
     border-radius: 15px;
-    padding: 20px 40px;
-    max-width: 65%;
     margin: 100px auto;
-    width: 100%;
+    max-width: 1200px;
+    width: 90%;
+    padding: 20px;
     box-shadow: 0px 8px 15px rgba(0,0,0,0.2);
     animation: fadeIn 0.8s ease;
 }
@@ -52,70 +52,17 @@ body {
     margin-top: -10px;
 }
 
-/* .message-box {
-    display: none;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 8px;
-    font-size: 1rem;
-} */
-
-.message-box {
-    display: none;
-    padding: 10px;
-    margin: 20px 0;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.message-box.error {
-    background-color: #ffdddd;
-    color: #a70000;
-    border: 1px solid #a70000;
-}
-
-.message-box.success {
-    background-color: #ddffdd;
-    color: #007a00;
-    border: 1px solid #007a00;
-}
-
-/* h1 {
-    font-size: 3rem;
-    color: #2c3e50;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin-bottom: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-} */
-
 h1 {
     font-size: 3rem;
-    color: #2c3e50;
-    background: linear-gradient(90deg, #00c6ff, #0072ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #0072ff;
     text-align: center;
     margin-bottom: 50px;
     padding: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    animation: slideInFromTop 1s ease-out;
-}
-
-@keyframes slideInFromTop {
-    from {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+    justify-content: space-around;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
 }
 
 h1 img {
@@ -126,13 +73,11 @@ h2 {
     font-size: 2rem;
     color: #34495e;
     margin: 30px 0;
-    /* font-size: 1.8rem; */
-    /* color: #37474f; */
-    /* margin: 20px 0; */
-    /* text-align: center; */
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
 }
 
 h2 img {
@@ -159,34 +104,13 @@ hr {
     border: none;
     border-top: 1px solid #ccc;
     margin: 15px 0;
-    animation: expand 0.5s ease-out;
 }
-
-@keyframes expand {
-    from {
-        width: 0;
-        opacity: 0;
-    }
-    to {
-        width: 100%;
-        opacity: 1;
-    }
-}
-
-/* section img {
-    width: 25%;
-    height: auto;
-    margin-bottom: 20px;
-    border-radius: 8px;
-} */
 
 section img {
     width: 25%;
     height: auto;
     margin-bottom: 20px;
     border-radius: 8px;
-    opacity: 0;
-    animation: fadeIn 1s ease forwards;
 }
 
 @keyframes fadeIn {
@@ -199,14 +123,6 @@ section img {
         transform: scale(1);
     }
 }
-
-/* .question-section {
-    display: none;
-}
-
-.question-section.active {
-    display: block;
-} */
 
 .question-section {
     display: none;
@@ -245,7 +161,6 @@ input[type="text"], input[type="number"], input[type="range"], select, button {
     margin: 10px 0;
     font-size: 1rem;
     border-radius: 8px;
-    /* border: 1px solid #ccc; */
     outline: none;
 }
 
@@ -256,11 +171,6 @@ input[type="text"], input[type="number"], input[type="range"], select, button {
     margin-top: 10px;
     text-align: center;
 }
-
-/* input:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
-} */
 
 input:focus, select:focus, input[type="range"]:focus {
     border-color: #3498db;
@@ -303,30 +213,6 @@ button:hover {
     background: linear-gradient(90deg, #0072ff, #00c6ff);
 }
 
-/* button {
-    background: linear-gradient(90deg, #00c6ff, #0072ff);
-    color: #fff;
-    font-weight: 600;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s, background 0.3s;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: auto;
-}
-
-button:hover {
-    transform: translateY(-3px);
-    background: linear-gradient(90deg, #0072ff, #00c6ff);
-} */
-
-hr {
-    border: none;
-    border-top: 1px solid #ccc;
-    margin: 15px 0;
-}
-
 /* Animations */
 @keyframes slideIn {
     from {
@@ -339,87 +225,18 @@ hr {
     }
 }
 
-h1 {
-    animation: slideIn 0.5s ease-out;
-}
-
 .question-section.active {
     animation: slideIn 0.5s ease-out;
-}
-
-/* Error Messages
-.message-box {
-    animation: fadeIn 0.3s ease, fadeOut 0.3s ease 2.7s;
-} */
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
 }
 
 #preview-content p {
     margin-bottom: 10px;
 }
 
-/* .error {
-    border-color: #a70000;
-    box-shadow: 0 0 5px rgba(167, 0, 0, 0.5);
-}
-
-.error-message {
-    color: #a70000;
-    font-size: 0.9rem;
-    margin: 5px 0;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-} */
-
 input.error, .options > input.error {
     border-color: #a70000;
     box-shadow: 0 0 5px rgba(167, 0, 0, 0.5);
 }
-
-/* Overlay
-#submission-overlay {
-    animation: fadeIn 0.5s ease;
-}
-
-/* Message Animation
-@keyframes popIn {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -55%) scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-
-#submission-message h2 {
-    font-size: 2rem;
-    color: #2ecc71;
-    margin-bottom: 10px;
-    text-shadow: 0px 2px 5px rgba(46, 204, 113, 0.5);
-}
-
-#submission-message p {
-    font-size: 1.2rem;
-    color: #34495e;
-} */
-
 
 input:focus {
     border-color: #3498db; /* Blue color for valid focus */
@@ -532,14 +349,6 @@ input.error {
 
 
 
-/* General Page Styling
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f9;
-    padding: 20px;
-} */
-
 /* Risk Level Bar */
 .risk-container {
     width: 80%;
@@ -548,8 +357,10 @@ body {
 
 #risk-bar-container {
     width: 100%;
+    height: 25px;
+    margin-left: auto;
+    margin-right: auto;
     background: lightgray;
-    height: 30px;
     position: relative;
     border-radius: 10px;
 }
@@ -566,12 +377,17 @@ body {
     display: flex;
     justify-content: space-between;
     margin-top: 5px;
+    width: 100%;
 }
 
-.label {
-    text-align: center;
-    font-size: 14px;
+.risk-labels .label {
     flex: 1;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.2;
+    padding: 3px 5px;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 .label.highlighted {
@@ -582,19 +398,23 @@ body {
 /* Gauge Meters */
 .gauge-container {
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
 }
 
 .gauge {
-    width: 150px;
-    height: 100px;
-    position: relative;
+    width: 250px;
+    height: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 canvas {
-    width: 150px;
-    height: 120px;
+    width: 12rem;
+    height: 7rem;
 }
 
 .gauge p {
@@ -607,15 +427,17 @@ canvas {
 /* Do's & Don'ts Section */
 .recommendations-container {
     display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
 }
 
-/* .dos, .donts {
+.recommendations-container div {
     flex: 1;
-    text-align: left;
-} */
+    min-width: 250px;
+}
 
 ul {
-    /* list-style-type: none; */
     margin: auto 10%;
     padding: 0;
 }
@@ -660,110 +482,12 @@ li {
 
 
 
-/* Global Styles for Responsiveness */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-}
-
-/* Responsive Container */
-.container {
-    max-width: 1200px;
-    width: 90%;
-    /* margin: 0 auto; */
-    padding: 20px;
-}
-
-/* Responsive Images */
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Responsive Buttons 
-button {
-    width: 7%;
-    max-width: 250px;
-    padding: 12px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-} */
-
-
-/* Risk Level Bar Responsive */
-#risk-bar-container {
-    width: 100%;
-    /* max-width: 600px; */
-    height: 25px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-}
-
-/* Risk Level Labels */
-.risk-labels {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 5px;
-    width: 100%;
-    /* max-width: 600px; */
-}
-
-.risk-labels .label {
-    flex: 1;
-    text-align: center;
-    font-size: 12px;
-    line-height: 1.2;
-    padding: 3px 5px;
-    white-space: normal;
-    word-wrap: break-word;
-}
-
-
-/* Adjust Gauge Meters */
-.gauge-container {
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
-    gap: 30px;
-    flex-wrap: wrap; /* Allows stacking on small screens */
-    margin-top: 20px;
-}
-
-/* Individual Gauge */
-.gauge {
-    width: 250px; /* Increased size for better visibility */
-    height: 75px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Ensure Canvases are Properly Centered */
-.gauge canvas {
-    display: block;
-    margin: 0 auto;
-}
 
 
 
-/* Responsive Recommendations Table */
-.recommendations-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
 
-.recommendations-container div {
-    flex: 1;
-    min-width: 250px;
-}
+
+
 
 /* Mobile Adjustments */
 @media screen and (max-width: 768px) {
@@ -792,7 +516,7 @@ button {
     }
 
     .risk-labels .label {
-        font-size: 10px; /* Reduce further for small screens */
+        font-size: 10px;
     }
 
     /* Stack Gauges Vertically on Small Screens */
@@ -828,3 +552,128 @@ button {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Typography */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    background: linear-gradient(120deg, #74ebd5, #9face6);
+    color: #444;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    animation: fadeInPage 1s ease-in-out;
+}
+
+@keyframes fadeInPage {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.container {
+    background: white;
+    border-radius: 15px;
+    margin: 100px auto;
+    max-width: 1200px;
+    width: 90%;
+    padding: 20px;
+    box-shadow: 0px 8px 15px rgba(0,0,0,0.2);
+    animation: fadeIn 0.8s ease;
+}
+
+/* Vertical Mode for Mobile Screens */
+@media screen and (max-width: 768px) {
+    #risk-bar-container.vertical {
+        width: 30px;
+        height: 260px;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        position: relative;
+        right: 55px;
+    }
+
+    #risk-bar-container.vertical #risk-bar {
+        width: 100%;
+        height: 0%;
+        position: absolute;
+        bottom: 0;
+        transition: height 1s ease-in-out;
+    }
+
+    .risk-labels {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        margin-left: 35px;
+        height: 100%;
+        gap: 15px;
+    }
+
+    .risk-labels .label {
+        text-align: left;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+}

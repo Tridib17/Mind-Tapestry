@@ -6,52 +6,135 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Update page content with retrieved data
         updateRiskBar(data.prediction);
-        animateGauge("depression-gauge", data.depression_score);
-        animateGauge("anxiety-gauge", data.anxiety_score);
-        animateGauge("stress-gauge", data.stress_score);
-        updateRecommendations(data.prediction);
+        setTimeout(() => {
+            startGaugeAnimations(data);
+            updateRecommendations(data.prediction);
+        }, 1000); // Ensure sync with risk bar animation
     } else {
         console.warn("⚠️ No result data found. Please submit the form again.");
     }
+    handleRiskBarOrientation();
 });
 
+let resizeTimeout;
+let isResizing = false;
 
-// Risk Level Bar Animation - Starts from "Normal" and Moves Upwards
-function updateRiskBar(targetScore) {
-    const bar = document.getElementById("risk-bar");
-    const labels = document.querySelectorAll(".risk-labels .label");
+window.addEventListener("resize", () => {
+    const storedData = sessionStorage.getItem("resultData");
+    if (storedData) {
+        const data = JSON.parse(storedData);
 
-    const colors = ["green", "yellowgreen", "orange", "orangered", "red"];
-    const segmentWidth = 100 / labels.length;
+        if (isResizing) return;
+        isResizing = true;
 
-    let currentScore = 0; // Start from "Normal"
-
-    function animate() {
-        if (currentScore <= targetScore) {
-            bar.style.width = `${segmentWidth * currentScore + segmentWidth / 2}%`;
-            bar.style.backgroundColor = colors[currentScore];
-
-            labels.forEach((label, index) => {
-                label.classList.toggle("highlighted", index === currentScore);
-            });
-
-            currentScore++;
-            setTimeout(animate, 200); // Adjust speed for smooth transition
-        }
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            updateRiskBar(data.prediction);
+            startGaugeAnimations(data);
+            updateRecommendations(data.prediction);
+            handleRiskBarOrientation();
+            isResizing = false; // Move this outside to prevent double triggering
+        }, 300); // Debounce time to prevent multiple triggers
     }
+});
 
-    animate();
+function handleRiskBarOrientation() {
+    const riskBarContainer = document.getElementById("risk-bar-container");
+    if (window.innerWidth <= 768) {
+        riskBarContainer.classList.add("vertical");
+    } else {
+        riskBarContainer.classList.remove("vertical");
+    }
 }
 
+
+// document.addEventListener("DOMContentLoaded", function () {
+//     const storedData = sessionStorage.getItem("resultData");
+
+//     if (storedData) {
+//         const data = JSON.parse(storedData);
+
+//         // Update page content with retrieved data
+//         updateRiskBar(data.prediction);
+//         animateGauge("depression-gauge", data.depression_score);
+//         animateGauge("anxiety-gauge", data.anxiety_score);
+//         animateGauge("stress-gauge", data.stress_score);
+//         updateRecommendations(data.prediction);
+//     } else {
+//         console.warn("⚠️ No result data found. Please submit the form again.");
+//     }
+// });
+
+
+// Risk Level Bar Animation
+function updateRiskBar(targetScore) {
+    const barContainer = document.getElementById("risk-bar-container");
+    const bar = document.getElementById("risk-bar");
+    const labelsContainer = document.querySelector(".risk-labels");
+    const labels = document.querySelectorAll(".risk-labels .label");
+
+    const colors = ["#008000", "#9ACD32", "#FFA500", "#FF4500", "#FF0000"];
+    const segmentSize = 100 / labels.length;
+    const isMobile = window.innerWidth <= 768;
+
+    // Reset bar and labels when switching modes
+    bar.style.transition = "none";
+    bar.style.width = "0%";
+    bar.style.height = "0%";
+    labelsContainer.style.transition = "none";
+    labels.forEach(label => label.classList.remove("highlighted"));
+    
+    if (isMobile) {
+        barContainer.classList.add("vertical");
+        bar.style.width = "100%";
+        bar.style.bottom = "0";
+        labelsContainer.classList.add("vertical-labels");
+    } else {
+        barContainer.classList.remove("vertical");
+        bar.style.width = "0%";
+        bar.style.height = "100%";
+        labelsContainer.classList.remove("vertical-labels");
+    }
+
+    setTimeout(() => {
+        bar.style.transition = "width 1s ease-in-out, height 1s ease-in-out, background-color 1s ease-in-out";
+        labelsContainer.style.transition = "opacity 0.5s ease-in-out";
+
+        let fillPercentage = ((targetScore + 1) / labels.length) * 100 - (segmentSize / 2.5);
+        
+        if (isMobile) {
+            bar.style.height = `${fillPercentage}%`;
+            bar.style.bottom = "0";
+        } else {
+            bar.style.width = `${fillPercentage}%`;
+        }
+        
+        bar.style.backgroundColor = colors[targetScore];
+        labels[targetScore].classList.add("highlighted");
+    }, 100);
+}
+
+
+function startGaugeAnimations(data) {
+    cancelAllGaugeAnimations();
+    animateGauge("depression-gauge", data.depression_score);
+    animateGauge("anxiety-gauge", data.anxiety_score);
+    animateGauge("stress-gauge", data.stress_score);
+}
+
+let gaugeAnimations = {};
 function animateGauge(canvasId, targetScore) {
+    if (gaugeAnimations[canvasId]) {
+        cancelAnimationFrame(gaugeAnimations[canvasId]); // Ensure only one animation per gauge
+    }
+
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext("2d");
-
-    // Ensure consistent dimensions for all gauges
     canvas.width = 260;
     canvas.height = 170;
 
     let currentScore = 0;
+    const step = Math.max(0.5, targetScore / 100);
 
     function drawGauge(score) {
         const width = canvas.width;
@@ -64,21 +147,18 @@ function animateGauge(canvasId, targetScore) {
 
         ctx.clearRect(0, 0, width, height);
 
-        // Background Arc (Gray)
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, Math.PI, 0, false);
         ctx.strokeStyle = "#ddd";
         ctx.lineWidth = 40;
         ctx.stroke();
 
-        // Progress Arc (Colored)
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, Math.PI, Math.PI + (Math.PI * (score / 100)), false);
         ctx.strokeStyle = getGaugeColor(score);
         ctx.lineWidth = 40;
         ctx.stroke();
 
-        // Needle
         const angle = Math.PI + (Math.PI * (score / 100));
         const needleBaseX = centerX + Math.cos(angle) * needleBaseOffset;
         const needleBaseY = centerY + Math.sin(angle) * needleBaseOffset;
@@ -86,31 +166,40 @@ function animateGauge(canvasId, targetScore) {
         const needleY = centerY + Math.sin(angle) * needleLength;
 
         ctx.beginPath();
-        ctx.moveTo(needleBaseX, needleBaseY); // Adjusted start position
+        ctx.moveTo(needleBaseX, needleBaseY);
         ctx.lineTo(needleX, needleY);
         ctx.strokeStyle = "black";
-        ctx.lineWidth = 8; // Thicker needle for better visibility
+        ctx.lineWidth = 8;
         ctx.stroke();
 
-        // Score Text
         ctx.font = "bold 28px Arial";
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
-        ctx.fillText(`${score}%`, centerX, centerY - radius - 30); // Adjusted position
+        ctx.fillText(`${Math.round(score)}%`, centerX, centerY - radius - 30);
     }
 
     function update() {
         if (currentScore <= targetScore) {
             drawGauge(currentScore);
-            setTimeout(update, 25);
-            currentScore++;
+            currentScore += step;
+            gaugeAnimations[canvasId] = requestAnimationFrame(update);
+        } else {
+            cancelAnimationFrame(gaugeAnimations[canvasId]);
+            delete gaugeAnimations[canvasId];
+            drawGauge(targetScore);
         }
     }
 
     update();
 }
 
-// Color Gradient for Gauge
+function cancelAllGaugeAnimations() {
+    Object.keys(gaugeAnimations).forEach(canvasId => {
+        cancelAnimationFrame(gaugeAnimations[canvasId]);
+        delete gaugeAnimations[canvasId];
+    });
+}
+
 function getGaugeColor(score) {
     if (score <= 25) return "green";
     if (score <= 50) return "yellow";
@@ -244,7 +333,7 @@ function generatePDF() {
         pdf.rect(5, 5, pdf.internal.pageSize.width - 10, pdf.internal.pageSize.height - 10); 
 
 
-        let yPos = 5; // Initial y position
+        let yPos = 10; // Initial y position
 
         // Add Logo and Name Side by Side
         const logo = document.getElementById("logo-img");
@@ -268,31 +357,53 @@ function generatePDF() {
 
         yPos += 15;
 
-        // Add Risk Level Section
-        pdf.setFontSize(16);
-        pdf.text("Your Risk Level:", 105, yPos, { align: "center" });
+        addRiskBar(pdf, yPos)
 
-        const riskContainer = document.getElementById("risk-bar-container");
-        const riskLabels = document.querySelector(".risk-labels");
+        function addRiskBar(pdf, yPos) {
+            pdf.setFontSize(16);
+            pdf.text("Your Risk Level:", 105, yPos, { align: "center" });
 
-        if (riskContainer && riskLabels) {
-            const riskCaptureDiv = document.createElement("div");
-            riskCaptureDiv.style.position = "absolute";
-            riskCaptureDiv.style.left = "-9999px";
-            riskCaptureDiv.appendChild(riskContainer.cloneNode(true));
-            riskCaptureDiv.appendChild(riskLabels.cloneNode(true));
-
-            document.body.appendChild(riskCaptureDiv);
-
-            html2canvas(riskCaptureDiv, { scale: 2 }).then(canvas => {
-                const riskBarImg = canvas.toDataURL("image/png");
-                pdf.addImage(riskBarImg, "PNG", 15, yPos + 5, 180, 20);
-                document.body.removeChild(riskCaptureDiv);
-                addGaugeMeters(pdf, yPos + 40);
+            const data = JSON.parse(sessionStorage.getItem("resultData"));
+            const colors = ["#008000", "#9ACD32", "#FFA500", "#FF4500", "#FF0000"];
+            const segmentSize = 100 / colors.length;
+        
+            // Create a new risk bar representation matching the original styles
+            const barX = 15;
+            const barY = yPos + 5;
+            const barWidth = 180;
+            const barHeight = 8;
+            const cornerRadius = 4;
+            
+            pdf.setFillColor(200, 200, 200); // Background color for risk bar
+            pdf.roundedRect(barX, barY, barWidth, barHeight, cornerRadius, cornerRadius, "F");
+            
+            // Fill up to the predicted level with rounded edges
+            const fillWidth = ((data.prediction + 1) * segmentSize * barWidth) / 100 - 10;
+            pdf.setFillColor(...hexToRgb(colors[JSON.parse(sessionStorage.getItem("resultData") || "{}").prediction]));
+            pdf.roundedRect(barX, barY, fillWidth, barHeight, cornerRadius, cornerRadius, "F");
+            
+            // Add risk level labels
+            const riskLabels = ["Normal", "Mild", "Moderate", "Severe", "Extreme"];
+            const riskDescriptions = ["Keep Thriving", "Pay Attention", "Time for a Change", "Seek Support Now", "Get Urgent Help Now"];
+            const labelY = barY + barHeight + 6;
+            pdf.setFontSize(11);
+            riskLabels.forEach((label, index) => {
+                const labelPos = barX + (index * (barWidth / riskLabels.length)) + 10;
+                pdf.text(label, labelPos + 5, labelY, { align: "center" });
+                pdf.setFontSize(8);
+                pdf.text(riskDescriptions[index], labelPos + 5, labelY + 4, { align: "center" });
+                pdf.setFontSize(11);
             });
-        } else {
+            
+                // Convert Hex color to RGB values
+                function hexToRgb(hex) {
+                    let bigint = parseInt(hex.slice(1), 16);
+                    return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+                }
             addGaugeMeters(pdf, yPos + 40);
         }
+
+
 
     function addGaugeMeters(pdf, yPos) {
         pdf.setFontSize(16);
@@ -316,7 +427,7 @@ function generatePDF() {
             xPos += 65;
         });
 
-        addRecommendations(pdf, yPos + 65);
+        addRecommendations(pdf, yPos + 60);
     }
 
     function addRecommendations(pdf, yPos) {
@@ -364,3 +475,4 @@ function generatePDF() {
         }
     }, 2500); // Loading animation for 2.5 seconds
 }
+
