@@ -201,11 +201,13 @@ function cancelAllGaugeAnimations() {
 }
 
 function getGaugeColor(score) {
-    if (score <= 25) return "green";
-    if (score <= 50) return "yellow";
-    if (score <= 75) return "orange";
-    return "red";
+    if (score <= 20) return "#008000";
+    if (score <= 40) return "#9ACD32";
+    if (score <= 60) return "#FFA500";
+    if (score <= 80) return "#FF4500";
+    return "#FF0000";
 }
+
 
 
 
