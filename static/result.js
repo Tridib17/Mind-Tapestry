@@ -338,14 +338,14 @@ function generatePDF() {
         // Add Logo and Name Side by Side
         const logo = document.getElementById("logo-img");
         if (logo && logo.src) {
-            pdf.addImage(logo.src, "PNG", 40, yPos, 50, 50); // Enlarged sideways
+            pdf.addImage(logo.src, "PNG", 45, yPos, 50, 50); // Enlarged sideways
         }
     
         // Add "Mind Tapestry" beside the logo
         pdf.setFont("helvetica", "italic");
-        pdf.setFontSize(35);
+        pdf.setFontSize(30);
         pdf.setTextColor(100); // Light gray color to match the webpage
-        pdf.text("Mind Tapestry", 95, yPos + 25); // Adjusted position beside logo
+        pdf.text("Mind Tapestry", 100, yPos + 25); // Adjusted position beside logo
 
         yPos += 55; // Adjust spacing for the next section
 
