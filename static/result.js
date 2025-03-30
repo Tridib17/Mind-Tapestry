@@ -73,6 +73,7 @@ function updateRiskBar(targetScore) {
     const labelsContainer = document.querySelector(".risk-labels");
     const labels = document.querySelectorAll(".risk-labels .label");
 
+    const riskLevels = ["Normal", "Mild", "Moderate", "Severe", "Extremely Severe"];
     const colors = ["#008000", "#9ACD32", "#FFA500", "#FF4500", "#FF0000"];
     const segmentSize = 100 / labels.length;
     const isMobile = window.innerWidth <= 768;
@@ -100,7 +101,10 @@ function updateRiskBar(targetScore) {
         bar.style.transition = "width 1s ease-in-out, height 1s ease-in-out, background-color 1s ease-in-out";
         labelsContainer.style.transition = "opacity 0.5s ease-in-out";
 
-        let fillPercentage = ((targetScore + 1) / labels.length) * 100 - (segmentSize / 2.5);
+        const scoreIndex = riskLevels.indexOf(targetScore);
+        if (scoreIndex === -1) return; // Invalid score input
+
+        let fillPercentage = ((scoreIndex + 1) / labels.length) * 100 - (segmentSize / 2.5);
         
         if (isMobile) {
             bar.style.height = `${fillPercentage}%`;
@@ -109,11 +113,10 @@ function updateRiskBar(targetScore) {
             bar.style.width = `${fillPercentage}%`;
         }
         
-        bar.style.backgroundColor = colors[targetScore];
-        labels[targetScore].classList.add("highlighted");
+        bar.style.backgroundColor = colors[scoreIndex];
+        labels[scoreIndex].classList.add("highlighted");
     }, 100);
 }
-
 
 function startGaugeAnimations(data) {
     cancelAllGaugeAnimations();
@@ -212,9 +215,10 @@ function getGaugeColor(score) {
 
 
 // Dynamic Do's, Don'ts, and Suggestions Based on Risk Level
-function updateRecommendations(score) {
-    const recommendations = [
-        {
+function updateRecommendations(targetScore) {
+    const riskLevels = ["Normal", "Mild", "Moderate", "Severe", "Extremely Severe"];
+    const recommendations = {
+        "Normal": {
             dos: [
                 "Sleep 7-9 hours per night for peak brain function.",
                 "Drink at least 2.5L of water daily to prevent fatigue.",
@@ -234,7 +238,7 @@ function updateRecommendations(score) {
                 "Schedule a weekly 'Me Time' activity (music, hobbies, reading)."
             ]
         },
-        {
+        "Mild": {
             dos: [
                 "Stick to a fixed sleep schedule (same bedtime and wake-up time).",
                 "Eat balanced meals rich in protein and fiber to stabilize mood.",
@@ -253,7 +257,7 @@ function updateRecommendations(score) {
                 "Spend 10 minutes outdoors daily—sunlight improves mood."
             ]
         },
-        {
+        "Moderate": {
             dos: [
                 "Aim for 7-8 hours of sleep and avoid naps longer than 20 minutes.",
                 "Drink at least 2.5 liters of water daily to prevent brain fog.",
@@ -272,7 +276,7 @@ function updateRecommendations(score) {
                 "Do one self-care activity per day (reading, music, nature walks)."
             ]
         },
-        {
+        "Severe": {
             dos: [
                 "Stick to at least seven hours of sleep—poor sleep increases stress and anxiety.",
                 "Eat high-protein and fiber-rich meals to stabilize mood.",
@@ -291,7 +295,7 @@ function updateRecommendations(score) {
                 "If overwhelmed, complete small tasks to regain a sense of control."
             ]
         },
-        {
+        "Extremely Severe": {
             dos: [
                 "Follow a strict bedtime routine (warm tea, reading) if struggling with sleep.",
                 "Call a crisis helpline or therapist—you are not alone.",
@@ -310,12 +314,15 @@ function updateRecommendations(score) {
                 "Remove harmful objects from your surroundings."
             ]
         }
-    ];
+    };
 
-    document.getElementById("dos-list").innerHTML = `<li>${recommendations[score].dos.join("</li><li>")}</li>`;
-    document.getElementById("donts-list").innerHTML = `<li>${recommendations[score].donts.join("</li><li>")}</li>`;
-    document.getElementById("suggestions-list").innerHTML = `<li>${recommendations[score].suggestions.join("</li><li>")}</li>`;
+    if (!(targetScore in recommendations)) return;
+
+    document.getElementById("dos-list").innerHTML = `<li>${recommendations[targetScore].dos.join("</li><li>")}</li>`;
+    document.getElementById("donts-list").innerHTML = `<li>${recommendations[targetScore].donts.join("</li><li>")}</li>`;
+    document.getElementById("suggestions-list").innerHTML = `<li>${recommendations[targetScore].suggestions.join("</li><li>")}</li>`;
 }
+
 
 function generatePDF() {
     // Show the loading screen
@@ -340,16 +347,22 @@ function generatePDF() {
         // Add Logo and Name Side by Side
         const logo = document.getElementById("logo-img");
         if (logo && logo.src) {
-            pdf.addImage(logo.src, "PNG", 45, yPos, 50, 50); // Enlarged sideways
+            pdf.addImage(logo.src, "PNG", 37, yPos, 50, 50); // Enlarged sideways
         }
     
         // Add "Mind Tapestry" beside the logo
         pdf.setFont("helvetica", "italic");
         pdf.setFontSize(30);
         pdf.setTextColor(100); // Light gray color to match the webpage
-        pdf.text("Mind Tapestry", 100, yPos + 25); // Adjusted position beside logo
+        pdf.text("Mind Tapestry", 107, yPos + 25); // Adjusted position beside logo
 
-        yPos += 55; // Adjust spacing for the next section
+        yPos += 25;
+
+        pdf.setFont("helvetica", "italic");
+        pdf.setFontSize(10);
+        pdf.text("An Early Stage Mental Health Screening of Students using Machine Learning Algorithms", 140, yPos + 8, { align: "center", maxWidth: 85 });
+
+        yPos += 30;
 
         // Add Report Title
         pdf.setFont("helvetica", "bold");
@@ -361,47 +374,40 @@ function generatePDF() {
 
         addRiskBar(pdf, yPos)
 
+                
         function addRiskBar(pdf, yPos) {
             pdf.setFontSize(16);
             pdf.text("Your Risk Level:", 105, yPos, { align: "center" });
 
             const data = JSON.parse(sessionStorage.getItem("resultData"));
-            const colors = ["#008000", "#9ACD32", "#FFA500", "#FF4500", "#FF0000"];
-            const segmentSize = 100 / colors.length;
-        
-            // Create a new risk bar representation matching the original styles
-            const barX = 15;
-            const barY = yPos + 5;
-            const barWidth = 180;
-            const barHeight = 8;
-            const cornerRadius = 4;
-            
-            pdf.setFillColor(200, 200, 200); // Background color for risk bar
-            pdf.roundedRect(barX, barY, barWidth, barHeight, cornerRadius, cornerRadius, "F");
-            
-            // Fill up to the predicted level with rounded edges
-            const fillWidth = ((data.prediction + 1) * segmentSize * barWidth) / 100 - 10;
-            pdf.setFillColor(...hexToRgb(colors[JSON.parse(sessionStorage.getItem("resultData") || "{}").prediction]));
-            pdf.roundedRect(barX, barY, fillWidth, barHeight, cornerRadius, cornerRadius, "F");
-            
-            // Add risk level labels
-            const riskLabels = ["Normal", "Mild", "Moderate", "Severe", "Extreme"];
+            const colors = { "Normal": "#008000", "Mild": "#9ACD32", "Moderate": "#FFA500", "Severe": "#FF4500", "Extremely Severe": "#FF0000" };
+            const riskLabels = Object.keys(colors);
             const riskDescriptions = ["Keep Thriving", "Pay Attention", "Time for a Change", "Seek Support Now", "Get Urgent Help Now"];
-            const labelY = barY + barHeight + 6;
+            
+            const barX = 15, barY = yPos + 5, barWidth = 180, barHeight = 8, cornerRadius = 4;
+            pdf.setFillColor(200, 200, 200);
+            pdf.roundedRect(barX, barY, barWidth, barHeight, cornerRadius, cornerRadius, "F");
+
+            if (data && data.prediction && riskLabels.includes(data.prediction)) {
+                const fillWidth = ((riskLabels.indexOf(data.prediction) + 0.8) / riskLabels.length) * barWidth;
+                pdf.setFillColor(...hexToRgb(colors[data.prediction]));
+                pdf.roundedRect(barX, barY, fillWidth, barHeight, cornerRadius, cornerRadius, "F");
+            }
+
             pdf.setFontSize(11);
             riskLabels.forEach((label, index) => {
-                const labelPos = barX + (index * (barWidth / riskLabels.length)) + 10;
-                pdf.text(label, labelPos + 5, labelY, { align: "center" });
+                const labelPos = barX + (index * (barWidth / riskLabels.length)) + 12;
+                pdf.text(label, labelPos + 5, barY + barHeight + 6, { align: "center" });
                 pdf.setFontSize(8);
-                pdf.text(riskDescriptions[index], labelPos + 5, labelY + 4, { align: "center" });
+                pdf.text(riskDescriptions[index], labelPos + 5, barY + barHeight + 12, { align: "center" });
                 pdf.setFontSize(11);
             });
-            
-                // Convert Hex color to RGB values
-                function hexToRgb(hex) {
-                    let bigint = parseInt(hex.slice(1), 16);
-                    return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
-                }
+
+            function hexToRgb(hex) {
+                let bigint = parseInt(hex.slice(1), 16);
+                return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+            }
+
             addGaugeMeters(pdf, yPos + 40);
         }
 
@@ -417,19 +423,19 @@ function generatePDF() {
             { label: "Stress", id: "stress-gauge" }
         ];
 
-        let xPos = 15;
+        let xPos = 20;
 
         gaugeData.forEach(({ label, id }) => {
             const canvas = document.getElementById(id);
             if (canvas) {
                 const imgData = canvas.toDataURL("image/png");
-                pdf.addImage(imgData, "PNG", xPos, yPos, 50, 40);
-                pdf.text(label, xPos + 25, yPos + 45, { align: "center" });
+                pdf.addImage(imgData, "PNG", xPos, yPos + 5, 40, 30);
+                pdf.text(label, xPos + 20, yPos + 40, { align: "center" });
             }
             xPos += 65;
         });
 
-        addRecommendations(pdf, yPos + 60);
+        addRecommendations(pdf, yPos + 55);
     }
 
     function addRecommendations(pdf, yPos) {

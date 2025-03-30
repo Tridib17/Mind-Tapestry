@@ -13,7 +13,12 @@
 </head>
 <body>
     <div id="result-container" class="container">
-        <h1><img id="logo-img" src="{{ url_for('static', filename='images/logo.png') }}" alt="Mind Tapestry Logo"> Mind Tapestry</h1>
+        <h1><img id="logo-img" src="{{ url_for('static', filename='images/logo.png') }}" alt="Mind Tapestry Logo">
+            <div>
+                Mind Tapestry
+                <small>An Early Stage Mental Health Screening of Students using Machine Learning Algorithms</small>
+            </div>
+        </h1>
 
         <!-- Loading Screen -->
         <div id="loading-screen">
@@ -24,7 +29,7 @@
         </div>
 
         <section>
-            <h2><img src="{{ url_for('static', filename='images/result.jpg') }}" alt="Result" style="margin-bottom:0"> Mental Health Results</h2>
+            <h2>Mental Health Results</h2>
         </section>
 
         <!-- Risk Level Bar -->

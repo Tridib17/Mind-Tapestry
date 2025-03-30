@@ -1,4 +1,13 @@
 const questionsData = {
+    stress: [
+        "I found it hard to wind down",
+        "I tended to over-react to situations",
+        "I felt that I was using a lot of nervous energy",
+        "I found myself getting agitated",
+        "I found it difficult to relax",
+        "I was intolerant of anything that kept me from getting on with what I was doing",
+        "I felt that I was rather touchy"
+    ],
     depression: [
         "I couldn't seem to experience any positive feeling at all",
         "I found it difficult to work up the initiative to do things",
@@ -10,21 +19,12 @@ const questionsData = {
     ],
     anxiety: [
         "I was aware of dryness of my mouth",
-        "I experienced breathing difficulty",
-        "I experienced trembling",
-        "I was worried about situations in which I might panic",
+        "I experienced breathing difficulty (e.g. excessively rapid breathing, breathlessness in the absence of physical exertion)",
+        "I experienced trembling (e.g. in the hands)",
+        "I was worried about situations in which I might panic and make a fool of myself",
         "I felt I was close to panic",
-        "I was aware of the action of my heart in the absence of physical exertion",
+        "I was aware of the action of my heart in the absence of physical exertion (e.g. sense of heart rate increase, heart missing a beat)",
         "I felt scared without any good reason"
-    ],
-    stress: [
-        "I found it hard to wind down",
-        "I tended to over-react to situations",
-        "I felt that I was using a lot of nervous energy",
-        "I found myself getting agitated",
-        "I found it difficult to relax",
-        "I was intolerant of anything that kept me from getting on with what I was doing",
-        "I felt that I was rather touchy"
     ]
 };
 
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     function updateValueDisplay(value) {
-        valueDisplay.textContent = `Selected Level: ${value} (${stressLevels[value - 1]})`;
+        valueDisplay.textContent = `Selected Level: ${value} (${stressLevels[value]})`;
     }
 
     // Update value dynamically on slider input
@@ -168,9 +168,9 @@ function validateSection(sectionId) {
         // Validation for text, number, dropdowns, and range
         if (input.id === "age") {
             const age = parseInt(input.value);
-            if (isNaN(age) || age < 18 || age > 65) {
+            if (isNaN(age) || age < 18 || age > 29) {
                 isValid = false;
-                errorElement.innerText = "Age must be between 18 and 65.";
+                errorElement.innerText = "Age must be between 18 and 29.";
             }
         } else if (input.id === "cgpa") {
             const cgpa = parseFloat(input.value);
@@ -241,6 +241,9 @@ function attachDynamicValidation() {
             input.addEventListener("input", () => {
                 validateField(input);
             });
+            input.addEventListener("change", () => {
+                validateField(input);
+            });
         }
     });
 }
@@ -253,15 +256,20 @@ function validateField(input) {
     // Validation logic based on field ID
     if (fieldId === "age") {
         const age = parseInt(input.value);
-        if (isNaN(age) || age < 18 || age > 65) {
+        if (isNaN(age) || age < 18 || age > 29) {
             isValid = false;
-            showError(input, "Age must be between 18 and 65.", errorMessage);
+            showError(input, "Age must be between 18 and 29.", errorMessage);
         }
     } else if (fieldId === "cgpa") {
         const cgpa = parseFloat(input.value);
         if (isNaN(cgpa) || cgpa < 0 || cgpa > 10) {
             isValid = false;
             showError(input, "CGPA must be between 0 and 10.", errorMessage);
+        }
+    } else if (input.tagName === "SELECT") {
+        if (input.value === "") {
+            isValid = false;
+            errorElement.innerText = "Please select an option.";
         }
     } else if (input.required && !input.value.trim()) {
         isValid = false;
@@ -434,7 +442,7 @@ function fillRandomResponses() {
     // Fill Age (input type="number" or text)
     let ageInput = document.querySelector('input[name="age"], input#age');
     if (ageInput) {
-        ageInput.value = Math.floor(Math.random() * (65 - 18 + 1)) + 18;
+        ageInput.value = Math.floor(Math.random() * (29 - 18 + 1)) + 18;
         ageInput.dispatchEvent(new Event("input")); // Trigger event in case of listeners
     }
 

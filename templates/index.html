@@ -9,7 +9,12 @@
 </head>
 <body>
     <div class="container">
-        <h1><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Mind Tapestry Logo"> Mind Tapestry</h1>
+        <h1><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Mind Tapestry Logo">
+            <div>
+                Mind Tapestry
+                <small>An Early Stage Mental Health Screening of Students using Machine Learning Algorithms</small>
+            </div>
+        </h1>
 
         <!-- Custom Animated Loading Overlay -->
         <div id="loading-screen">
@@ -21,7 +26,7 @@
 
         <!-- Personal Details Section -->
         <section id="personal-details" class="question-section active">
-            <h2><img src="{{ url_for('static', filename='images/personal_details.png') }}" alt="Personal Details"> Personal Details</h2>
+            <h2>Personal Details</h2>
 
             <div>
                 <label for="age">Age:</label>
@@ -46,7 +51,7 @@
             <div>
                 <label for="sleep-quality">How would you rate the quality of your sleep over the past few weeks?</label>
                 <select id="sleep-quality" required>
-                    <option value="">Select</option>
+                    <option value="" selected disabled>Select</option>
                     <option value="Good">Good (7+ hours/day)</option>
                     <option value="Average">Average (5-7 hours/day)</option>
                     <option value="Poor">Poor (< 5 hours/day)</option>
@@ -55,7 +60,7 @@
             <div>
                 <label for="physical-activity">How would you describe your level of physical activity in a typical week?</label>
                 <select id="physical-activity" required>
-                    <option value="">Select</option>
+                    <option value="" selected disabled>Select</option>
                     <option value="High">High: Regular intense physical activity (e.g., gym workouts, sports, daily exercise routines)</option>
                     <option value="Moderate">Moderate: Some physical activity (e.g., walking, light exercises, occasional workouts)</option>
                     <option value="Low">Low: Minimal or no physical activity (e.g., mostly sedentary, no regular exercise)</option>
@@ -64,7 +69,7 @@
             <div>
                 <label for="diet-quality">How would you rate the overall quality of your diet in the past weeks?</label>
                 <select id="diet-quality" required>
-                    <option value="">Select</option>
+                    <option value="" selected disabled>Select</option>
                     <option value="Good">Good: Consistently healthy, balanced meals with adequate nutrients</option>
                     <option value="Average">Average: A mix of healthy and unhealthy foods, somewhat balanced but not consistent</option>
                     <option value="Poor">Poor: Mostly unhealthy or processed foods, irregular meals, or lack of balanced nutrition</option>
@@ -82,50 +87,50 @@
             <div>
                 <label for="extracurricular">How actively are you involved in extracurricular activities (e.g., clubs, sports, arts, volunteering)?</label>
                 <select id="extracurricular" required>
-                    <option value="">Select</option>
+                    <option value="" selected disabled>Select</option>
                     <option value="High">High: Frequently and actively involved</option>
                     <option value="Moderate">Moderate: Occasionally participate</option>
                     <option value="Low">Low: Rarely or never participate</option>
                 </select>
             </div>
             <div class="slider-container">
-                <label for="financial-stress">How would you rate your financial stress? (On the scale of 1 to 5)</label>
-                <input type="range" id="financial-stress" min="1" max="5" step="1" value="3">
+                <label for="financial-stress">How would you rate your financial stress? (On the scale of 0 to 4)</label>
+                <input type="range" id="financial-stress" min="0" max="4" step="1" value="2">
                 <div id="selected-value" class="slider-value"></div>
             </div>
             
             
             <div class="button-group">
+                <button onclick="nextSection('stress')">Next</button>
+            </div>
+        </section>
+        
+        <!-- Stress Section -->
+        <section id="stress" class="question-section">
+            <h2>Stress Assessment Questionnaire</h2>
+            <div id="stress-questions"></div>
+            <div class="button-group">
+                <button onclick="prevSection('personal-details')">Previous</button>
                 <button onclick="nextSection('depression')">Next</button>
             </div>
         </section>
 
         <!-- Depression Section -->
         <section id="depression" class="question-section">
-            <h2><img src="{{ url_for('static', filename='images/depression.jpeg') }}" alt="Depression"> Depression Assessment</h2>
+            <h2>Depression Assessment Questionnaire</h2>
             <div id="depression-questions"></div>
             <div class="button-group">
-                <button onclick="prevSection('personal-details')">Previous</button>
+                <button onclick="prevSection('stress')">Previous</button>
                 <button onclick="nextSection('anxiety')">Next</button>
             </div>
         </section>
 
         <!-- Anxiety Section -->
         <section id="anxiety" class="question-section">
-            <h2><img src="{{ url_for('static', filename='images/anxiety.jpg') }}" alt="Anxiety"> Anxiety Assessment</h2>
+            <h2>Anxiety Assessment Questionnaire</h2>
             <div id="anxiety-questions"></div>
             <div class="button-group">
                 <button onclick="prevSection('depression')">Previous</button>
-                <button onclick="nextSection('stress')">Next</button>
-            </div>
-        </section>
-
-        <!-- Stress Section -->
-        <section id="stress" class="question-section">
-            <h2><img src="{{ url_for('static', filename='images/stress.jpg') }}" alt="Stress"> Stress Assessment</h2>
-            <div id="stress-questions"></div>
-            <div class="button-group">
-                <button onclick="prevSection('anxiety')">Previous</button>
                 <button onclick="showPreview()">Preview</button>
             </div>
         </section>
@@ -135,7 +140,7 @@
             <h2>Preview Your Responses</h2>
             <div id="preview-content"></div>
             <div class="button-group">
-                <button onclick="prevSection('stress')">Previous</button>
+                <button onclick="prevSection('anxiety')">Previous</button>
                 <button onclick="submitForm()">Submit</button>
             </div>
         </section>

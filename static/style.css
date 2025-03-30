@@ -36,7 +36,7 @@ body {
 .container {
     background: white;
     border-radius: 15px;
-    margin: 100px auto;
+    margin: 50px auto;
     max-width: 1200px;
     width: 90%;
     padding: 20px;
@@ -59,7 +59,7 @@ h1 {
     font-size: 3rem;
     color: #0072ff;
     text-align: center;
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
     padding: 10px;
     display: flex;
     align-items: center;
@@ -69,17 +69,27 @@ h1 {
 }
 
 h1 img {
-    width: 50%;
+    width: 30%;
+}
+
+h1 div {
+    display: flex;
+    flex-direction: column;
+}
+
+h1 div small {
+    font-size: small;
 }
 
 h2 {
     font-size: 2rem;
     color: #34495e;
     margin: 30px 0;
-    display: flex;
+    text-align: center;
+    /* display: flex;
     justify-content: space-evenly;
     align-items: center;
-    opacity: 0;
+    opacity: 0; */
     animation: fadeIn 1s ease forwards;
 }
 
@@ -131,7 +141,7 @@ section img {
 
 .options {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 10px;
     margin-left: 16px;
     margin-top: 17px;
@@ -160,12 +170,12 @@ input[type="text"], input[type="number"], input[type="range"], select, button {
     font-size: 16px;
     font-weight: bold;
     color: #0072ff;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     text-align: center;
 }
 
-input:focus, select:focus, input[type="range"]:focus {
-    border-color: #3498db;
+input:focus, select:focus {
+    border-color: #3498db; /* Blue color for valid focus */
     box-shadow: 0 0 8px rgba(52, 152, 219, 0.8);
     animation: pulse 1.5s infinite;
 }
@@ -177,6 +187,16 @@ input:focus, select:focus, input[type="range"]:focus {
     50% {
         box-shadow: 0 0 12px rgba(52, 152, 219, 1);
     }
+}
+
+input.error, .options > input.error, select.error {
+    border-color: #a70000; /* Red color for invalid input */
+    box-shadow: 0 0 5px rgba(167, 0, 0, 0.5);
+}
+
+input.valid, select.valid {
+    border-color: #3498db; /* Blue color for valid input */
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
 }
 
 .button-group {
@@ -225,25 +245,6 @@ button:hover {
     margin-bottom: 10px;
 }
 
-input.error, .options > input.error {
-    border-color: #a70000;
-    box-shadow: 0 0 5px rgba(167, 0, 0, 0.5);
-}
-
-input:focus {
-    border-color: #3498db; /* Blue color for valid focus */
-    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
-}
-
-input.valid {
-    border-color: #3498db; /* Blue color for valid input */
-    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
-}
-
-input.error {
-    border-color: #a70000; /* Red color for invalid input */
-    box-shadow: 0 0 5px rgba(167, 0, 0, 0.5);
-}
 
 /* Full-Screen Loading Screen */
 #loading-screen {
@@ -488,9 +489,16 @@ li {
         padding: 15px;
     }
 
-    h1, h2 {
+    h1 {
+        font-size: 1.4rem;
+        /* text-align: center; */
+    }
+    h1 div small {
+        font-size: x-small;
+    }
+    h2 {
         font-size: 1.2rem;
-        text-align: center;
+        /* text-align: center; */
     }
     section img {
         width: 50%;
