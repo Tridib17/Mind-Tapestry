@@ -1,3 +1,15 @@
+// Show modal on page load
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("intro-modal");
+    modal.classList.add("show");
+});
+
+// Close modal function
+function closeModal() {
+    const modal = document.getElementById("intro-modal");
+    modal.classList.remove("show");
+}
+
 const questionsData = {
     stress: [
         "I found it hard to wind down",
