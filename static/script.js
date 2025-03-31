@@ -223,21 +223,21 @@ function validateSection(sectionId) {
     return allValid;
 }
 
-function createErrorMessage(input) {
-    const errorElement = document.createElement('div');
-    errorElement.className = 'error-message';
-    errorElement.style.color = '#a70000';
-    errorElement.style.fontSize = '0.9rem';
-    errorElement.style.margin = '5px 0';
+// function createErrorMessage(input) {
+//     const errorElement = document.createElement('div');
+//     errorElement.className = 'error-message';
+//     errorElement.style.color = '#a70000';
+//     errorElement.style.fontSize = '0.9rem';
+//     errorElement.style.margin = '5px 0';
 
-    // Error message content based on input type
-    if (input.type === 'text') errorElement.innerText = "This field cannot be empty.";
-    else if (input.type === 'email') errorElement.innerText = "Please enter a valid email address.";
-    else if (input.type === 'number') errorElement.innerText = "Please provide a valid number.";
-    else if (input.type === 'radio') errorElement.innerText = "Please select an option.";
+//     // Error message content based on input type
+//     if (input.type === 'text') errorElement.innerText = "This field cannot be empty.";
+//     else if (input.type === 'email') errorElement.innerText = "Please enter a valid email address.";
+//     else if (input.type === 'number') errorElement.innerText = "Please provide a valid number.";
+//     else if (input.type === 'radio') errorElement.innerText = "Please select an option.";
 
-    return errorElement;
-}
+//     return errorElement;
+// }
 
 function attachDynamicValidation() {
     document.querySelectorAll("input[required], select[required], input[type=radio]").forEach(input => {
@@ -493,3 +493,78 @@ function fillRandomResponses() {
 
     console.log("✅ Form filled with random values!");
 }
+
+
+// (async function automatedTesting() {
+//     const predictionOrder = ["Normal", "Mild", "Moderate", "Severe", "Extremely Severe"];
+//     const predictionData = {};
+
+//     while (Object.keys(predictionData).length < 5) {
+//         fillRandomResponses(); // Fill form with random data
+        
+//         await new Promise(resolve => setTimeout(resolve, 500)); // Small delay
+
+//         if (!validateSection(currentSection)) {
+//             console.warn("Validation failed, retrying...");
+//             continue; // Skip this iteration if validation fails
+//         }
+
+//         // Collect form data (radio questions and other form fields)
+//         const formData = {
+//             age: document.getElementById("age").value,
+//             gender: document.querySelector('input[name="gender"]:checked')?.value,
+//             cgpa: document.getElementById("cgpa").value,
+//             sleep_quality: document.getElementById("sleep-quality").value,
+//             physical_activity: document.getElementById("physical-activity").value,
+//             diet_quality: document.getElementById("diet-quality").value,
+//             chronic_illness: document.querySelector('input[name="chronic-conditions"]:checked')?.value,
+//             extracurricular: document.getElementById("extracurricular").value,
+//             financial_stress: document.getElementById("financial-stress").value
+//         };
+
+//         document.querySelectorAll('.question-section input[type="radio"]:checked').forEach((radio) => {
+//             formData[radio.name] = radio.value; // Capture each radio question and its answer
+//         });
+
+//         try {
+//             const response = await fetch("/predict", {
+//                 method: "POST",
+//                 headers: { "Content-Type": "application/json" },
+//                 body: JSON.stringify(formData),
+//             });
+
+//             const data = await response.json();
+//             console.log("📩 Server Response:", data);
+
+//             if (data.prediction && !predictionData[data.prediction]) {
+//                 predictionData[data.prediction] = formData; // Store formData for the unique prediction
+//                 console.log(`✅ New Prediction Found: ${data.prediction}`);
+//             }
+//         } catch (error) {
+//             console.error("❌ Fetch Error:", error);
+//         }
+//     }
+
+//     // Arrange data in the specified order
+//     let textContent = "";
+//     predictionOrder.forEach(prediction => {
+//         if (predictionData[prediction]) {
+//             textContent += `=== ${prediction} ===\n`;
+//             for (const [key, value] of Object.entries(predictionData[prediction])) {
+//                 textContent += `${key}: ${value}\n`;
+//             }
+//             textContent += `\n`;
+//         }
+//     });
+
+//     // Create and download the text file
+//     const blob = new Blob([textContent], { type: "text/plain" });
+//     const link = document.createElement("a");
+//     link.href = URL.createObjectURL(blob);
+//     link.download = "predictions_log.txt";
+//     document.body.appendChild(link);
+//     link.click();
+//     document.body.removeChild(link);
+
+//     console.log("🎉 All five predictions collected and saved to predictions_log.txt!");
+// })();

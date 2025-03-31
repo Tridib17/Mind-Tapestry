@@ -120,9 +120,9 @@ function updateRiskBar(targetScore) {
 
 function startGaugeAnimations(data) {
     cancelAllGaugeAnimations();
+    animateGauge("stress-gauge", data.stress_score);
     animateGauge("depression-gauge", data.depression_score);
     animateGauge("anxiety-gauge", data.anxiety_score);
-    animateGauge("stress-gauge", data.stress_score);
 }
 
 let gaugeAnimations = {};
