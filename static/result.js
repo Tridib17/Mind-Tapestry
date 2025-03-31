@@ -418,9 +418,9 @@ function generatePDF() {
         pdf.text("Your Scores:", 105, yPos, { align: "center" });
 
         const gaugeData = [
+            { label: "Stress", id: "stress-gauge" },
             { label: "Depression", id: "depression-gauge" },
-            { label: "Anxiety", id: "anxiety-gauge" },
-            { label: "Stress", id: "stress-gauge" }
+            { label: "Anxiety", id: "anxiety-gauge" }
         ];
 
         let xPos = 20;
