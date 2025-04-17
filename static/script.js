@@ -404,13 +404,13 @@ function submitForm() {
         sleep_quality: document.getElementById("sleep-quality").value,
         physical_activity: document.getElementById("physical-activity").value,
         diet_quality: document.getElementById("diet-quality").value,
-        chronic_illness: document.querySelector('input[name="chronic-conditions"]:checked')?.value,
+        chronic_illness: document.querySelector('input[name="chronic-illness"]:checked')?.value,
         extracurricular: document.getElementById("extracurricular").value,
         financial_stress: document.getElementById("financial-stress").value
     };
 
     // Collect Likert-scale responses
-    document.querySelectorAll('.question-section input[type="radio"]:checked').forEach((radio) => {
+    document.querySelectorAll('.assessment input[type="radio"]:checked').forEach((radio) => {
         formData[radio.name] = radio.value;
     });
 
@@ -522,7 +522,7 @@ function fillRandomResponses() {
 //             financial_stress: document.getElementById("financial-stress").value
 //         };
 
-//         document.querySelectorAll('.question-section input[type="radio"]:checked').forEach((radio) => {
+//         document.querySelectorAll('.assessment input[type="radio"]:checked').forEach((radio) => {
 //             formData[radio.name] = radio.value; // Capture each radio question and its answer
 //         });
 
