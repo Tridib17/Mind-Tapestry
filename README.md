@@ -15,7 +15,7 @@ Mind Tapestry is a Flask-based web application designed to assess mental health 
 │   │-- style.css         # Styles for the web app
 │   │-- script.js         # Form validation and navigation
 │   │-- result.js         # Handles animations and report generation
-│   │-- /images          # Contains logos and icons
+│   │-- /images          # Contains logo
 │-- /templates
 │   │-- index.html        # Main questionnaire page
 │   │-- result.html       # Results page with risk levels
@@ -28,8 +28,8 @@ Mind Tapestry is a Flask-based web application designed to assess mental health 
 ## 🛠️ Installation & Setup
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/mental-health-app.git
-   cd mental-health-app
+   git clone https://github.com/Tridib17/Mind-Tapestry.git
+   cd Mind-Tapestry
    ```
 
 2. **Set Up a Virtual Environment (Recommended)**

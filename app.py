@@ -70,13 +70,14 @@ def predict():
 
         # Combine all responses
         responses = stress_responses + depression_responses + anxiety_responses 
+        print("✅ Processed responses:", responses)
         
         # Check for invalid Likert responses
         if -1 in responses:
             return jsonify({"error": "Invalid Likert response mapping"}), 400
         
         # Convert features into a NumPy array
-        features = np.array([main_features + responses])
+        data = np.array([main_features + responses])
 
         # Convert NumPy array to DataFrame with correct column names
         feature_columns = [
@@ -86,20 +87,27 @@ def predict():
             [f"depression_column{i}" for i in range(1, 8)] + \
             [f"anxiety_column{i}" for i in range(1, 8)]
 
-        features_df = pd.DataFrame(features, columns=feature_columns)
-        print("✅ Final Processed Features:\n", features_df)
+        data_df = pd.DataFrame(data, columns=feature_columns)
+        print("✅ Final Processed Data:\n", data_df)
 
         # Make prediction using the trained model
-        prediction = model.predict(features_df)[0]
+        prediction = model.predict(data_df)[0]
+        stress_score = round(((sum(stress_responses) * 2) / 42) * 100, 2)
+        depression_score = round(((sum(depression_responses) * 2) / 42) * 100, 2)
+        anxiety_score = round(((sum(anxiety_responses) * 2) / 42) * 100, 2)
         print("✅ Prediction Result:", prediction)
+        print(f"✅ Stress Score: {stress_score}%")
+        print(f"✅ Depression Score: {depression_score}%")
+        print(f"✅ Anxiety Score:, {anxiety_score}%")
 
         # Calculate and return stress, depression, and anxiety scores
         return jsonify({
             "prediction": prediction,
-            "depression_score": round(((sum(depression_responses) * 2) / 42) * 100, 2),
-            "anxiety_score": round(((sum(anxiety_responses) * 2) / 42) * 100, 2),
-            "stress_score": round(((sum(stress_responses) * 2) / 42) * 100, 2)
+            "stress_score": stress_score,
+            "depression_score": depression_score,
+            "anxiety_score": anxiety_score
         })
+
     except Exception as e:
         print("❌ Error in prediction:", str(e))
         return jsonify({"error": str(e)}), 400
